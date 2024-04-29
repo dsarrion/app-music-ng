@@ -6,6 +6,7 @@ import { RegistroComponent } from './pages/registro/registro.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { ErrorComponent } from './pages/error/error.component';
+import { HeaderComponent } from './components/header/header.component';
 
 export const routes: Routes = [
     {path: "", component: HomeComponent},
@@ -13,6 +14,7 @@ export const routes: Routes = [
     {path: "contacto", component: ContactoComponent},
     {path: "registro", component: RegistroComponent},
     {path: "login", component: LoginComponent},
-    {path: "perfil", component: PerfilComponent},
+    {path: "ajustes", component: PerfilComponent},
+    {path: "logout", component: HeaderComponent},
     {path: "**", component: ErrorComponent}
 ];

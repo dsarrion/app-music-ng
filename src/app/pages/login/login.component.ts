@@ -1,8 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../services/user/user.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { User } from '../../interface/user';
 
 @Component({
   selector: 'app-login',
@@ -13,17 +15,14 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  usersService = inject(UserService);
-
-  form: FormGroup = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
-  });
-  submitted = false;
-
+  public userData: string = "";
+  public submitted = false;
+  form: FormGroup = new FormGroup({});
+  
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ){}
 
   ngOnInit(): void {
@@ -45,10 +44,12 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    const response = await this.usersService.login(this.form.value);
+    const response = await this.userService.login(this.form.value);
+
     if(!response.error){
       localStorage.setItem('token_user', response.token);
       this.router.navigate(['']);
+      this.form.reset();
     }
   }
 
