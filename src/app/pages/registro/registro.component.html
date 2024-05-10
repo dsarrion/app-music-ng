@@ -1,11 +1,11 @@
 <!--Título y descripción-->
 @if(edit === false){
-<div class="flex flex-col items-center justify-center px-6 pt-2 md:pt-8 mx-auto">
-    <h1 class="flex text-2xl text-white md:text-3xl">Regístrate</h1>
-    <p class="text-gray-400 italic text-pretty mx-6 my-2">Regístrate de forma gratuita para interactuar con la comunidad
-        <b>TalentoDJs</b>
-    </p>
-</div>
+    <div class="flex flex-col items-center justify-center px-6 pt-2 md:pt-8 mx-auto">
+        <h1 class="flex text-2xl text-white md:text-3xl">Regístrate</h1>
+        <p class="text-gray-400 italic text-pretty mx-6 my-2">Regístrate de forma gratuita para interactuar con la comunidad
+            <b>'TalentoDJs'</b>
+        </p>
+    </div>
 }@else {
     <div class="flex flex-col items-center justify-center px-6 pt-2 md:pt-8 mx-auto">
         <h1 class="flex text-2xl text-white md:text-3xl">Ajustes</h1>
@@ -19,6 +19,7 @@
         <div
             class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <p class="text-red-700">{{errorMessage}}</p>
                 @if(edit === false){
                 <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                     Crear una cuenta
@@ -51,11 +52,11 @@
                     </div>
                     <div>
                         <label for="surname"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellidos</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido</label>
                         <input type="text" formControlName="surname" id="surname"
                             [ngClass]="{ 'is-invalid': submitted && f['surname'].errors }"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Apellidos">
+                            placeholder="Apellido">
                         @if(submitted && f['surname'].errors){
                         <small class="text-red-700">
                             @if (f['surname'].errors['required']) {
@@ -86,8 +87,8 @@
                         }
                     </div>
                     <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tu
-                            email</label>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            Email</label>
                         <input type="email" formControlName="email" id="email"
                             [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -104,81 +105,86 @@
                         }
                     </div>
                     @if(!edit){
-                        <div>
-                            <label for="password"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
-                            <input type="password" formControlName="password" id="password" placeholder="••••••••"
-                                [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            @if (submitted && f['password'].errors) {
-                            <small class="text-red-700">
-                                @if (f['password'].errors['required']) {
-                                La contraseña es requerida
-                                }
-                                @if (f['password'].errors['minlength']) {
-                                La contraseña debe tener un minimo de 8 caracteres
-                                }
-                                @if (f['password'].errors['maxlength']) {
-                                La contraseña no puede exceder de 40 caracteres
-                                }
-                            </small>
+                    <div>
+                        <label for="password"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+                        <input type="password" formControlName="password" id="password" autocomplete="new-password"
+                            placeholder="••••••••" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @if (submitted && f['password'].errors) {
+                        <small class="text-red-700">
+                            @if (f['password'].errors['required']) {
+                            La contraseña es requerida
                             }
-                        </div>
-                        <div>
-                            <label for="confirm-password"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmar
-                                contraseña</label>
-                            <input type="password" formControlName="vpass" id="vpass" placeholder="••••••••"
-                                [ngClass]="{ 'is-invalid': submitted && f['vpass'].errors }"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            @if (submitted && f['vpass'].errors) {
-                            <small class="text-red-700"> @if (f['vpass'].errors['required']) {
-                                Se requiere verificar la contraseña
-                                }
-                                @if (f['vpass'].errors['matching']) {
-                                No coincide con la contraseña indicada
-                                }
-                            </small>
+                            @if (f['password'].errors['minlength']) {
+                            La contraseña debe tener un minimo de 8 caracteres
                             }
-                        </div>
+                            @if (f['password'].errors['maxlength']) {
+                            La contraseña no puede exceder de 40 caracteres
+                            }
+                        </small>
+                        }
+                    </div>
+                    <div>
+                        <label for="confirm-password"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmar
+                            contraseña</label>
+                        <input type="password" formControlName="vpass" id="vpass" placeholder="••••••••"
+                            [ngClass]="{ 'is-invalid': submitted && f['vpass'].errors }"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @if (submitted && f['vpass'].errors) {
+                        <small class="text-red-700"> @if (f['vpass'].errors['required']) {
+                            Se requiere verificar la contraseña
+                            }
+                            @if (f['vpass'].errors['matching']) {
+                            No coincide con la contraseña indicada
+                            }
+                        </small>
+                        }
+                    </div>
                     }@else {
-                            <div>
-                                <label for="avatar"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Avatar</label>
-                                <input type="file" formControlName="avatar" id="avatar"
-                                    [ngClass]="{ 'is-invalid': submitted && f['avatar'].errors }"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                @if(submitted && f['avatar'].errors){
-                                <small class="text-red-700">
-                                    @if (f['avatar'].errors['maxlength']) {
-                                    El nick no puede tener mas de 20 caracteres
-                                    }
-                                </small>
-                                }
-                            </div>
-                    }
-                    @if(!edit){
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                                <input id="acceptTerms" aria-describedby="terms" type="checkbox"
-                                    formControlName="acceptTerms"
-                                    [ngClass]="{ 'is-invalid': submitted && f['acceptTerms'].errors }"
-                                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                                    required="">
-                            </div>
-                            <div class="ml-3 text-sm">
-                                <label for="acceptTerms" class="font-light text-gray-500 dark:text-gray-300">Acepto los <a
-                                        class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                                        href="#">Terminos and Condiciones</a></label><br>
-                                @if (submitted && f['acceptTerms'].errors) {
-                                <small class="text-red-700">-Debes aceptar los Terminos y Coindiciones-</small>
-                                }
-                            </div>
+                    <div>
+                        <div class="flex items-center">
+                            <label for="avatar"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Avatar</label>
+                            <img class="w-8 h-8 ml-2 mb-2 opacity-50 rounded-full"
+                                src="assets/img/picture-profile-icon.jpg" alt="user photo">
                         </div>
+
+                        <input type="file" formControlName="avatar" id="avatar"
+                            [ngClass]="{ 'is-invalid': submitted && f['avatar'].errors }"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @if(submitted && f['avatar'].errors){
+                        <small class="text-red-700">
+                            @if (f['avatar'].errors['maxlength']) {
+                            El avatar no puede tener mas de 20 caracteres
+                            }
+                        </small>
+                        }
+                    </div>
                     }
-                    
                     @if(!edit){
-                        <button type="submit"
+                    <div class="flex items-start">
+                        <div class="flex items-center h-5">
+                            <input id="acceptTerms" aria-describedby="terms" type="checkbox"
+                                formControlName="acceptTerms"
+                                [ngClass]="{ 'is-invalid': submitted && f['acceptTerms'].errors }"
+                                class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                                required="">
+                        </div>
+                        <div class="ml-3 text-sm">
+                            <label for="acceptTerms" class="font-light text-gray-500 dark:text-gray-300">Acepto los <a
+                                    class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                                    href="#">Terminos and Condiciones</a></label><br>
+                            @if (submitted && f['acceptTerms'].errors) {
+                            <small class="text-red-700">-Debes aceptar los Terminos y Coindiciones-</small>
+                            }
+                        </div>
+                    </div>
+                    }
+
+                    @if(!edit){
+                    <button type="submit"
                         class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                         Crear una cuenta</button>
                     <p class="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -187,7 +193,7 @@
                             aquí.</a>
                     </p>
                     }@else {
-                        <button type="submit"
+                    <button type="submit"
                         class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                         Actualizar mis datos</button>
                     }

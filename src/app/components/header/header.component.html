@@ -2,12 +2,12 @@
 <nav class="border-gray-200 backdrop-blur-2xl relative"> <!--fixed top-0 w-full-->
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
-    <!--NAV MENU-->
+    <!--MENU NAV-->
     <div class="items-center mx-10 justify-between hidden w-full md:flex md:w-auto order-2" id="navbar-user">
       <ul
         class="flex md:flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:space-x-4 space-x-6 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:border-gray-700">
         <li>
-          <a routerLink=""
+          <a routerLink="/inicio"
             class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
             aria-current="page">INICIO</a>
         </li>
@@ -24,22 +24,13 @@
           <div id="dropdownNavbar"
             class="z-10 hidden w-full border border-gray-700 backdrop-blur-3xl font-normal divide-gray-100 rounded-lg shadow md:w-44 ">
             <ul class="py-2 m-4 text-sm text-gray-200" aria-labelledby="dropdownLargeButton">
-              <li>
-                <a href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-500/60 dark:hover:text-white">ELECTRÓNICA</a>
-              </li>
-              <li>
-                <a href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-500/60 dark:hover:text-white">URBANO</a>
-              </li>
-              <li>
-                <a href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-500/60 dark:hover:text-white">TECHNO</a>
-              </li>
-              <li>
-                <a href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-500/60 dark:hover:text-white">BACHATA</a>
-              </li>
+              @for(category of categories; track category.id){
+                <li>
+                  <a href="#"
+                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-500/60 dark:hover:text-white">{{category.name}}</a>
+                </li>
+              }
+              
             </ul>
           </div>
         </li>
@@ -64,7 +55,7 @@
     </div>
 
     <!--LOGO Y NOMBRE WEB-->
-    <a href="#" class="flex items-center order-2 md:order-1 ml-8 space-x-3 rtl:space-x-reverse">
+    <a routerLink="/inicio" class="flex items-center order-2 md:order-1 ml-8 space-x-3 rtl:space-x-reverse">
       <h1 class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">TalentoDJs</h1>
     </a>
 
@@ -81,14 +72,14 @@
       }
       
       <!--Usuario Menu-->
-      @if(userLoginOn){
+      @if(userLoginOn && userData){
         <div class="flex items-center space-x-1 text-sm md:text-base md:space-x-0 md:mr-4 rtl:space-x-reverse">
           <span class="text-gray-400 italic md:pr-1">Hola</span>
-          <span class="text-gray-300 pr-1 md:pr-2">Name!!</span>
+          <span class="text-gray-300 pr-1 md:pr-2">{{userData.nick}}</span>
           <button type="button"
             class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
             id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
-            data-dropdown-placement="bottom">
+            data-dropdown-placement="bottom" (click)="expandCollapse()">
             <span class="sr-only">Abrir Menu Desplegable</span>
             <img class="w-8 h-8 opacity-50 rounded-full" src="assets/img/picture-profile-icon.jpg" alt="user photo">
           </button>
@@ -97,14 +88,14 @@
             class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
             id="user-dropdown">
             <div class="px-4 py-3">
-              <span class="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-              <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">name.com</span>
+              <span class="block text-sm text-gray-900 dark:text-white">{{userData.name+' '+userData.surname}}</span>
+              <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">TalentoDJs</span>
             </div>
             <ul class="py-2" aria-labelledby="user-menu-button">
               <li>
-                <a href="#"
+                <a routerLink="admin_panel"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                  Panel de Usuario</a>
+                  Admin Panel</a>
               </li>
               <li>
                 <a routerLink="ajustes"
@@ -112,7 +103,8 @@
                   Ajustes</a>
               </li>
               <li>
-                <a routerLink="logout"
+                <a routerLink="/inicio"
+                  (click)="logout()"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                   Cerrar Sesion</a>
               </li>

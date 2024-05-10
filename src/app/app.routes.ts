@@ -6,15 +6,28 @@ import { RegistroComponent } from './pages/registro/registro.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { ErrorComponent } from './pages/error/error.component';
-import { HeaderComponent } from './components/header/header.component';
+import { NewVideoComponent } from './pages/admin/videos/new-video/new-video.component';
+import { AdminPanelComponent } from './pages/admin/admin-panel/admin-panel.component';
+import { AllVideosComponent } from './pages/admin/videos/all-videos/all-videos.component';
+import { EditVideoComponent } from './pages/admin/videos/edit-video/edit-video.component';
+import { AddCategoryComponent } from './pages/admin/category/add-category/add-category.component';
+import { DeleteCatComponent } from './pages/admin/category/delete-cat/delete-cat.component';
+import { EditCatComponent } from './pages/admin/category/edit-cat/edit-cat.component';
 
 export const routes: Routes = [
-    {path: "", component: HomeComponent},
+    {path: "", redirectTo:'/inicio', pathMatch:'full'},
+    {path: "inicio", component: HomeComponent},
     {path: "categoria", component: CategoriaComponent},
     {path: "contacto", component: ContactoComponent},
     {path: "registro", component: RegistroComponent},
     {path: "login", component: LoginComponent},
     {path: "ajustes", component: PerfilComponent},
-    {path: "logout", component: HeaderComponent},
+    {path: "admin_panel", component: AdminPanelComponent},
+    {path: "videoUpload", component: NewVideoComponent},
+    {path: "all_videos", component: AllVideosComponent},
+    {path: "edit_video/:id", component: EditVideoComponent},
+    {path: "add_category", component: AddCategoryComponent},
+    {path: "delete_cat", component: DeleteCatComponent},
+    {path: "edit_cat", component: EditCatComponent},
     {path: "**", component: ErrorComponent}
 ];

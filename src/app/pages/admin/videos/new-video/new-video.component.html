@@ -1,0 +1,129 @@
+<!--Título y descripción-->
+@if(!edit){
+    <div class="flex flex-col items-center justify-center px-6 pt-2 md:pt-8 mx-auto">
+        <h1 class="flex text-2xl text-white md:text-3xl">Subir Video de Youtube</h1>
+    </div>
+} @else {
+    <div class="flex flex-col items-center justify-center px-6 pt-2 md:pt-8 mx-auto">
+        <h1 class="flex text-2xl text-white md:text-3xl">Editar Video de Youtube</h1>
+    </div>
+}
+
+<!--Formulario-->
+<section>
+    <div class="flex flex-col items-center justify-center px-6 py-2 mb-20 mt-4 mx-auto md:mt-6">
+        <div
+            class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                @if(errorMessage){
+                <p class="text-red-700">{{errorMessage}}</p>
+                }
+
+                <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                    Sesión DJ
+                </h2>
+
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
+                    
+                    <div>
+                        <label for="dj"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DJ</label>
+                        <input type="text" formControlName="dj" id="dj"
+                            [ngClass]="{ 'is-invalid': submitted && f['dj'].errors }"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Dj">
+                        @if(submitted && f['dj'].errors){
+                        <small class="text-red-700">
+                            @if (f['dj'].errors['required']) {
+                            El DJ es requerido
+                            }
+                        </small>
+                        }
+                    </div>
+
+                    <div>
+                        <label for="title"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título</label>
+                        <input type="text" formControlName="title" id="title"
+                            [ngClass]="{ 'is-invalid': submitted && f['title'].errors }"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Título">
+                        @if(submitted && f['title'].errors){
+                        <small class="text-red-700">
+                            @if (f['title'].errors['required']) {
+                            El título es requerido
+                            }
+                        </small>
+                        }
+                    </div>
+
+                    <div>
+                        <label for="description"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
+                        <input type="text" formControlName="description" id="description"
+                            [ngClass]="{ 'is-invalid': submitted && f['description'].errors }"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Descripción">
+                        @if(submitted && f['description'].errors){
+                        <small class="text-red-700">
+                            @if (f['description'].errors['required']) {
+                            La descripción es requerida
+                            }
+                        </small>
+                        }
+                    </div>
+
+                    <div>
+                        <label for="category_id"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
+                        <select formControlName="category_id" id="category_id"
+                            [ngClass]="{ 'is-invalid': submitted && f['category_id'].errors }"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="" disabled selected>Selecciona categoría</option>
+                            @for(category of categories; track category.id){
+                                <option [value]="category.id">
+                                    {{category.name}}
+                                </option>
+                            }    
+                        </select>
+                        @if(submitted && f['category_id'].errors){
+                            <small class="text-red-700">
+                                @if (f['category_id'].errors['required']) {
+                                La categoria es requerida
+                                }
+                            </small>
+                            }
+                    </div>
+
+                    <div>
+                        <label for="url"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">URL</label>
+                        <input type="text" formControlName="url" id="url"
+                            [ngClass]="{ 'is-invalid': submitted && f['url'].errors }"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="url.youtube.com">
+                        @if(submitted && f['url'].errors){
+                        <small class="text-red-700">
+                            @if (f['url'].errors['required']) {
+                            La URL es requerida
+                            }
+                        </small>
+                        }
+                    </div>
+                    
+                    @if(!edit){
+                        <button type="submit"
+                        class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        Subir Video
+                    </button>
+                    } @else {
+                        <button type="submit"
+                        class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        Actualizar Datos
+                        </button>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

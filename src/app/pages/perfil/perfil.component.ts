@@ -10,5 +10,4 @@ import { RegistroComponent } from '../registro/registro.component';
 })
 export class PerfilComponent {
   edit: boolean = true;
-  userLoginOn: boolean = false;
 }

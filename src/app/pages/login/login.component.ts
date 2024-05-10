@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user/user.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { User } from '../../interface/user';
+import { User } from '../../interface/userModel';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +14,11 @@ import { User } from '../../interface/user';
 })
 export class LoginComponent implements OnInit {
 
-  public userData: string = "";
-  public submitted = false;
+  loginError: string = "";
+  userData?: User;
+  submitted = false;
   form: FormGroup = new FormGroup({});
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -40,17 +40,22 @@ export class LoginComponent implements OnInit {
   async onSubmit(form: void) {
     this.submitted = true;
 
-    if (this.form.invalid) {
+    if (this.form.valid) {
+      this.userService.login(this.form.value).subscribe({
+        next: (userData) => { 
+          console.log(userData)
+        },
+        error: (errorData) => {
+          console.error(errorData);
+          this.loginError = errorData;
+        },
+        complete: () => {
+          this.router.navigate(['/inicio']);
+          this.form.reset();
+        }
+      });
+    } else {
       return;
     }
-
-    const response = await this.userService.login(this.form.value);
-
-    if(!response.error){
-      localStorage.setItem('token_user', response.token);
-      this.router.navigate(['']);
-      this.form.reset();
-    }
   }
-
 }

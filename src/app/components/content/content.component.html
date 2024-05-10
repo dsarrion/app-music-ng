@@ -1,39 +1,33 @@
-<section class="text-gray-400 body-font rounded-lg m-4">
-    <div class="max-w-screen-xl container px-5 py-12 mx-auto">
-      <h2 class="mx-12 my-4 text-xl text-white">Categoria: Electrónica</h2>
-      <div class="flex flex-row overflow-x-auto mx-4 -mb-10 text-center">
-        <div class="min-w-96 sm:w-1/2 mb-10 px-4">
-          <div class="rounded-lg h-64 overflow-hidden">
-            <img alt="content" class="object-cover object-center h-full w-full" src="https://dummyimage.com/1201x501">
+<section class="max-w-screen-xl mx-auto p-4">
+  <h2 class="mx-12 my-4 text-xl text-white">{{category.name}}</h2>
+  <div class="overflow-x-auto">
+    <ul class="w-max flex flex-nowrap">
+      @for(video of videos; track video.id){
+      <li class="w-full p-4 sm:w-1/2 md:w-1/3 lg:w-1/4">
+        <div
+          class="max-w-md w-full  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <!--Sacar imagen de video-->
+          <a href="">
+            @if(video.url){
+              <img class="rounded-t-lg w-full" src="{{getThumb(video.url, 'mqdefault')}}" alt="" />
+              }@else {
+              <img class="rounded-t-lg w-full" src="/src/assets/img/default-video.jpg" alt="" />
+              }
+          </a>
+          <div class="p-2">
+            <a href="#">
+              <h5 class="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                {{video.dj}}</h5>
+            </a>
+            <p class="mb-3 px-2 font-normal h-12 text-gray-700 dark:text-gray-400 overflow-hidden">
+              {{video.title}}
+            </p>
+            <div class="flex w-auto gap-2">
+            </div>
           </div>
-          <h2 class="title-font text-2xl font-medium text-white mt-6 mb-3">Buy YouTube Videos</h2>
-          <p class="leading-relaxed text-base">Williamsburg occupy sustainable snackwave gochujang. Pinterest cornhole brunch, slow-carb neutra irony.</p>
-          <button class="flex mx-auto mt-6 text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none hover:bg-indigo-600 rounded">Button</button>
         </div>
-        <div class="min-w-96 sm:w-1/2 mb-10 px-4">
-          <div class="rounded-lg h-64 overflow-hidden">
-            <img alt="content" class="object-cover object-center h-full w-full" src="https://dummyimage.com/1202x502">
-          </div>
-          <h2 class="title-font text-2xl font-medium text-white mt-6 mb-3">The Catalyzer</h2>
-          <p class="leading-relaxed text-base">Williamsburg occupy sustainable snackwave gochujang. Pinterest cornhole brunch, slow-carb neutra irony.</p>
-          <button class="flex mx-auto mt-6 text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none hover:bg-indigo-600 rounded">Button</button>
-        </div>
-        <div class="min-w-96 sm:w-1/2 mb-10 px-4">
-          <div class="rounded-lg h-64 overflow-hidden">
-            <img alt="content" class="object-cover object-center h-full w-full" src="https://dummyimage.com/1201x501">
-          </div>
-          <h2 class="title-font text-2xl font-medium text-white mt-6 mb-3">Buy YouTube Videos</h2>
-          <p class="leading-relaxed text-base">Williamsburg occupy sustainable snackwave gochujang. Pinterest cornhole brunch, slow-carb neutra irony.</p>
-          <button class="flex mx-auto mt-6 text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none hover:bg-indigo-600 rounded">Button</button>
-        </div>
-        <div class="min-w-96 sm:w-1/2 mb-10 px-4">
-          <div class="rounded-lg h-64 overflow-hidden">
-            <img alt="content" class="object-cover object-center h-full w-full" src="https://dummyimage.com/1202x502">
-          </div>
-          <h2 class="title-font text-2xl font-medium text-white mt-6 mb-3">The Catalyzer</h2>
-          <p class="leading-relaxed text-base">Williamsburg occupy sustainable snackwave gochujang. Pinterest cornhole brunch, slow-carb neutra irony.</p>
-          <button class="flex mx-auto mt-6 text-white bg-indigo-500 border-0 py-2 px-5 focus:outline-none hover:bg-indigo-600 rounded">Button</button>
-        </div>
-      </div>
-    </div>
-  </section>
+      </li>
+      }
+    </ul>
+  </div>
+</section>

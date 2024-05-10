@@ -1,0 +1,117 @@
+<!--Título-->
+@if(!edit_cat && !delete_cat){
+    <div class="flex flex-col items-center justify-center px-6 pt-2 md:pt-8 mx-auto">
+        <h1 class="flex text-2xl text-white md:text-3xl">Añadir Categoria Nueva</h1>
+    </div>
+} @else if (delete_cat) {
+    <div class="flex flex-col items-center justify-center px-6 pt-2 md:pt-8 mx-auto">
+        <h1 class="flex text-2xl text-white md:text-3xl">Eliminar Categoria</h1>
+    </div>
+} @else {
+    <div class="flex flex-col items-center justify-center px-6 pt-2 md:pt-8 mx-auto">
+        <h1 class="flex text-2xl text-white md:text-3xl">Editar Categoria</h1>
+    </div>
+}
+
+
+<!--Formulario-->
+<section>
+    <div class="flex flex-col items-center justify-center px-6 py-2 mb-20 mt-4 mx-auto md:mt-6">
+        <div
+            class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                @if(errorMessage){
+                    <p class="text-red-700">{{errorMessage}}</p>
+                }
+
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
+
+                    @if(!edit_cat && !delete_cat){       <!--// Añadir categoria-->
+                        <div>
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de
+                                categoria</label>
+                            <input type="name" formControlName="name" id="name"
+                                [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Categoria">
+                            @if(submitted && f['name'].errors){
+                            <small class="text-red-700">
+                                @if (f['name'].errors['required']) {
+                                La categoria es requerida
+                                }
+                            </small>
+                            }
+                        </div>
+                    } @else if( delete_cat ) {      <!--Eliminar categoria-->
+                        <div>
+                            <label for="name"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
+                            <select formControlName="name" id="name"
+                                [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="" disabled selected>Selecciona categoría</option>
+                                @for(category of categories; track category.id){
+                                <option [value]="category.id">
+                                    {{category.name}}
+                                </option>
+                                }
+                            </select>
+                            @if(submitted && f['name'].errors){
+                                <small class="text-red-700">
+                                    @if (f['name'].errors['required']) {
+                                    La categoria es requerida
+                                    }
+                                </small>
+                            }
+                        </div>
+                    } @else {       <!--Editar categoria-->
+                        <div>
+                            <label for="id"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
+                            <select formControlName="id" id="id"
+                                [ngClass]="{ 'is-invalid': submitted && f['id'].errors }"
+                                class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="" disabled selected>Selecciona categoría</option>
+                                @for(category of categories; track category.id){
+                                <option [value]="category.id">
+                                    {{category.name}}
+                                </option>
+                                }
+                            </select>
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                Renombrar categoria</label>
+                            <input type="name" formControlName="name" id="name"
+                                [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            @if(submitted && f['name'].errors){
+                            <small class="text-red-700">
+                                @if (f['name'].errors['required']) {
+                                La categoria es requerida
+                                }
+                            </small>
+                            }
+                        </div>
+                    }
+
+                    @if(!edit_cat && !delete_cat){
+                        <button type="submit"
+                            class="w-full text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:focus:ring-primary-800">
+                            Nueva Categoria
+                        </button>
+                    } @else if(delete_cat) {
+                        <button type="submit"
+                            class="w-full text-white bg-red-800 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-950 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            Borrar Categoria
+                        </button>
+                    } @else {
+                        <button type="submit"
+                            class="w-full text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            Editar Categoria
+                        </button>
+                    }
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
