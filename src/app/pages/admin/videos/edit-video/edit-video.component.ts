@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NewVideoComponent } from '../new-video/new-video.component';
 
@@ -11,15 +11,10 @@ import { NewVideoComponent } from '../new-video/new-video.component';
 })
 export class EditVideoComponent implements OnInit{
   edit:boolean =true; 
-  id!:number;
+  @Input('id') id!:string;
 
  constructor(private route: ActivatedRoute){}
  
  ngOnInit(): void {
-    // Obtener el parámetro de la URL llamado 'id'
-    this.route.params.subscribe(params => {
-      this.id = +params['id'];
-    });
-
  }
 }

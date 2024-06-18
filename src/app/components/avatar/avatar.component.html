@@ -1,0 +1,8 @@
+@if(userLoginOn){
+    @if(isLoading){
+        <img class="object-cover opacity-70 rounded-full" [style.width.px]="size" [style.height.px]="size" src="assets/img/picture-profile-icon.jpg" alt="Cargando">
+    }@else {
+        <img class="object-cover opacity-70 rounded-full" [style.width.px]="size" [style.height.px]="size" [src]="Image" alt="Foto {{userName}}">
+    }
+    
+}

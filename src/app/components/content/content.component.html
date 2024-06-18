@@ -1,33 +1,54 @@
-<section class="max-w-screen-xl mx-auto p-4">
-  <h2 class="mx-12 my-4 text-xl text-white">{{category.name}}</h2>
-  <div class="overflow-x-auto">
-    <ul class="w-max flex flex-nowrap">
-      @for(video of videos; track video.id){
-      <li class="w-full p-4 sm:w-1/2 md:w-1/3 lg:w-1/4">
+<section class="max-w-screen-xl mx-auto p-1 md:p-4 my-4">
+  @if(category){
+  <a [routerLink]="['/categoria', category.id]">
+    <h2
+      class="mx-2 mt-4 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border border-purple-400 text-indigo-400 shadow-[0_0_1px_#fff,inset_0_0_1px_#fff,0_0_5px_#08f,0_0_7px_#08f,0_0_15px_#08f]">
+      <span class="inline-block italic transition-transform duration-300 hover:scale-110">
+        {{category.name.toUpperCase()}}
+      </span>
+    </h2>
+  </a>
+  }
+  <div class="overflow-x-auto snap-x">
+    <ul class="w-max flex flex-nowrap group">
+      @for(video of videos; track video){
+      <li class="w-full py-3 lg:py-4 px-2 lg:px-3">
         <div
-          class="max-w-md w-full  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          class="max-w-56 lg:max-w-xs h-full flex flex-col snap-center snap-always duration-300 group-hover:opacity-80 hover:!opacity-100 border rounded-lg shadow bg-gray-800 border-gray-700">
           <!--Sacar imagen de video-->
-          <a href="">
-            @if(video.url){
-              <img class="rounded-t-lg w-full" src="{{getThumb(video.url, 'mqdefault')}}" alt="" />
-              }@else {
-              <img class="rounded-t-lg w-full" src="/src/assets/img/default-video.jpg" alt="" />
-              }
-          </a>
-          <div class="p-2">
-            <a href="#">
-              <h5 class="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <a [routerLink]="['/sesion', video.id]">
+            <div class="w-full">
+              @if(video.url){
+                <img class="rounded-t-lg" src="{{getThumb(video.url, 'sddefault')}}" alt="sesionDj" />
+                }@else {
+                <img class="rounded-t-lg" src="/src/assets/img/default-video.jpg" alt="error" />
+                }
+            </div> 
+            <div class="py-1 md:py-3 px-2 md:px-3 max-h-28 flex flex-col items-center justify-center">
+              <h5 class="mb-1 text-center text-base lg:text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {{video.dj}}</h5>
-            </a>
-            <p class="mb-3 px-2 font-normal h-12 text-gray-700 dark:text-gray-400 overflow-hidden">
-              {{video.title}}
-            </p>
-            <div class="flex w-auto gap-2">
+              <p class="text-sm lg:text-base text-center h-auto text-gray-700 dark:text-gray-400 overflow-hidden">
+                {{video.title}}
+              </p>
+              <div class="flex w-auto gap-2">
+              </div>
             </div>
-          </div>
+          </a>
+          
         </div>
       </li>
       }
+      @if(category){
+      <li class="w-auto rounded-md h-auto py-4 lg:py-6 px-2 lg:px-3">
+        <a [routerLink]="['/categoria', category.id]" title="Ver mas ->">
+          <div
+            class="flex items-center p-6 h-full rounded-l-lg bg-gradient-to-r from-gray-700/60 to-black/70 hover:bg-gray-800">
+            <app-next></app-next>
+          </div>
+        </a>
+      </li>
+      }
+
     </ul>
   </div>
 </section>

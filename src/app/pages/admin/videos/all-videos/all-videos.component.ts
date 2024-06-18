@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TracksService } from '../../../../services/tracks/tracks.service';
 import { Router, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-all-videos',
@@ -9,10 +10,11 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './all-videos.component.html',
   styleUrl: './all-videos.component.css'
 })
-export class AllVideosComponent implements OnInit {
+export class AllVideosComponent implements OnInit, OnDestroy {
 
   videos?: any;
   errorMessage: string = "";
+  private subscriptions: Subscription = new Subscription();
 
   constructor(private trackService: TracksService, private router: Router) { }
 
@@ -21,18 +23,20 @@ export class AllVideosComponent implements OnInit {
   }
 
   allTracks() {
-    return this.trackService.getAllTracks().subscribe({
-      next: (allTracks) => {
-        this.videos = allTracks
-      },
-      error: (errorTracks) => {
-        console.error(errorTracks);
-        this.errorMessage = errorTracks;
-      },
-      complete: () => {
-        //console.log("Videos recibidos correctamente", this.videos)
-      }
-    })
+    this.subscriptions.add(
+      this.trackService.getAllTracks().subscribe({
+        next: (allTracks) => {
+          this.videos = allTracks
+        },
+        error: (errorTracks) => {
+          console.error(errorTracks);
+          this.errorMessage = errorTracks;
+        },
+        complete: () => {
+          //console.log("Videos recibidos correctamente", this.videos)
+        }
+      })
+    )
   }
 
   getThumb(url: string, size: string) {
@@ -53,5 +57,9 @@ export class AllVideosComponent implements OnInit {
 
     return thumburl;
 
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

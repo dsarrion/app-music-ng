@@ -1,9 +1,10 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, throwError, tap, map } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
-import { User } from '../../interface/userModel';
-import { LoginModel } from '../../interface/loginModel';
+import { User } from '../../Models/userModel';
+import { LoginModel } from '../../Models/loginModel';
+import { Blob } from 'buffer';
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +12,22 @@ import { LoginModel } from '../../interface/loginModel';
 export class UserService {
 
   currentUserLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  currentUserData: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  currentUserData: BehaviorSubject<User | null> = new BehaviorSubject<User |null >(null);
 
   constructor(private http: HttpClient) {
-    this.inicializarSessionStorage();
+    this.inicializarLocalStorage();
   }
 
-  getHeaders(){
-    const token = sessionStorage.getItem('token_user');
-    const headers = { Authorization: `Bearer ${token}` };
-    return headers;
+  getHeaders(): HttpHeaders{
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token_user')}`
+    });
   }
 
-  private inicializarSessionStorage(): void {
-    if (typeof sessionStorage !== 'undefined') {
-      const token = sessionStorage.getItem("token_user");
+  private inicializarLocalStorage(): void {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem("token_user");
       if (token) {
         this.getUserData().subscribe({
           next: (userData) => {
@@ -43,14 +45,14 @@ export class UserService {
         this.currentUserData.next(null);
       }
     } else {
-      console.warn('sessionStorage no está disponible.');
+      console.warn('localStorage no está disponible.');
     }
   }
 
   login(form: LoginModel): Observable<any> {
     return this.http.post<any>(environment.apiUrlBase+"/auth/login", form).pipe(
       tap((userData) => {
-        sessionStorage.setItem("token_user", userData.token)
+        localStorage.setItem("token_user", userData.token)
         this.currentUserData.next(userData.data);
         this.currentUserLoginOn.next(true);
       }),
@@ -59,7 +61,7 @@ export class UserService {
     );
   }
 
-  register(form: any) {
+  register(form: FormData): Observable<any> {
     return this.http.post<any>(`${environment.apiUrlBase}/auth/register`, form).pipe(
         catchError(this.handleError)
       )
@@ -73,12 +75,13 @@ export class UserService {
   }
 
   logout() {
-    sessionStorage.removeItem('token_user');
+    localStorage.removeItem('token_user');
     this.currentUserLoginOn.next(false);
+    this.currentUserData.next(null);
   }
 
   getUserData(): Observable<User> {
-    const token = sessionStorage.getItem('token_user');
+    const token = localStorage.getItem('token_user');
     if(!token){
       return throwError(() => new Error('Token no encontrado.'));
     }
@@ -88,6 +91,26 @@ export class UserService {
     )
   }
 
+  uploadAvatar(formData: FormData): Observable<any>{
+    return this.http.post<any>(environment.apiUrlBase+"/user/upload/avatar", formData).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  getAvatar(name: string |undefined): Observable<Blob> {
+    let httpHeaders = new HttpHeaders({'Authorization': `Bearer ${localStorage.getItem('token_user')}`})
+                      .set('Accept', "image/webp,*/*");
+
+    return this.http.get<Blob>(environment.apiUrlBase+'/user/avatar/'+name, { headers: httpHeaders, responseType: 'blob' as 'json' }).pipe(
+      catchError(this.handleError))
+  }
+
+  getIconAvatar(name: string |undefined): Observable<Blob> {
+    return this.http.get<Blob>(environment.apiUrlBase+'/avatar/'+name, { responseType: 'blob' as 'json' }).pipe(
+      catchError(this.handleError))
+  }
+
+  
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       console.error('Se ha producido un error ', error.error)

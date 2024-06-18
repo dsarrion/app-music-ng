@@ -1,0 +1,5 @@
+@if(isLoading){
+    <img class="object-cover opacity-70 rounded-full size-8" src="assets/img/picture-profile-icon.jpg" alt="Cargando">
+}@else{
+    <img class="object-cover opacity-70 rounded-full size-8" [src]="urlImage+ImageName" alt="Foto">
+}

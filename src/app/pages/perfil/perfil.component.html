@@ -1,1 +1,45 @@
-<app-registro [edit]=true></app-registro>
+<app-perfil-option></app-perfil-option>
+@if(userData){
+<section class="flex flex-col w-full items-center justify-center">
+    <div class="flex items-center mb-8">
+        <div class="p-0.5 ring-2 ring-gray-600 rounded-full">
+            <app-avatar [size]=50></app-avatar>
+        </div>
+        <div class="px-3">
+            <span class="ml-1 block text-sm text-gray-300">{{userData.nick}}</span>
+            <span class="block text-sm  text-gray-500 italic truncate dark:text-gray-400">TalentoDJs</span>
+        </div>
+    </div>
+    <div>
+        <h2 class="text-gray-200 md:text-lg">Información de usuario</h2>
+        <hr class="h-px mt-1 mb-4 border-0 bg-gray-700">
+    </div>
+    <div>
+
+        <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
+            <div class="flex flex-col pb-3">
+                <dt class="mb-1 text-gray-500 text-sm md:text-base dark:text-gray-400">Nombre:</dt>
+                <dd class="md:text-lg text-gray-100 font-semibold">{{userData.name}}</dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 text-sm md:text-base dark:text-gray-400">Apellido:</dt>
+                <dd class="md:text-lg text-gray-100 font-semibold">{{userData.surname}}</dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 text-sm md:text-base dark:text-gray-400">Nick:</dt>
+                <dd class="md:text-lg text-gray-100 font-semibold">{{userData.nick}}</dd>
+            </div>
+            <div class="flex flex-col py-3">
+                <dt class="mb-1 text-gray-500 text-sm md:text-base dark:text-gray-400">Correo Electrónico:</dt>
+                <dd class="md:text-lg text-gray-100 font-semibold">{{userData.email}}</dd>
+                <hr class="h-px mt-4 mb-4 border-0 bg-gray-700">
+            </div>
+        </dl>
+
+    </div>
+    <div class="flex flex-row justify-center mb-2 italic text-sm md:text-base text-gray-400">
+        <span>Te uniste a la comunidad <b>TalentoDJs</b> el: {{ createdDate | date: 'dd/MM/yyyy' }}</span>
+
+    </div>
+</section>
+}

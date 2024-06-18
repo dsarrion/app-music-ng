@@ -13,15 +13,19 @@ import { EditVideoComponent } from './pages/admin/videos/edit-video/edit-video.c
 import { AddCategoryComponent } from './pages/admin/category/add-category/add-category.component';
 import { DeleteCatComponent } from './pages/admin/category/delete-cat/delete-cat.component';
 import { EditCatComponent } from './pages/admin/category/edit-cat/edit-cat.component';
+import { VideoComponent } from './pages/video/video.component';
+import { AjustesComponent } from './pages/ajustes/ajustes.component';
 
 export const routes: Routes = [
     {path: "", redirectTo:'/inicio', pathMatch:'full'},
     {path: "inicio", component: HomeComponent},
-    {path: "categoria", component: CategoriaComponent},
+    {path: "categoria/:id", component: CategoriaComponent},
+    {path: "sesion/:id", component: VideoComponent},
     {path: "contacto", component: ContactoComponent},
     {path: "registro", component: RegistroComponent},
     {path: "login", component: LoginComponent},
-    {path: "ajustes", component: PerfilComponent},
+    {path: "ajustes", component: AjustesComponent},
+    {path: "perfil", component: PerfilComponent},
     {path: "admin_panel", component: AdminPanelComponent},
     {path: "videoUpload", component: NewVideoComponent},
     {path: "all_videos", component: AllVideosComponent},

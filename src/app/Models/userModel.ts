@@ -5,5 +5,6 @@ export interface User {
     surname: string,
     nick: string,
     email: string, 
-    avatar?: string
+    avatar?: string,
+    created_at?: Date
 }

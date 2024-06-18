@@ -2,8 +2,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
-import { Track } from '../../interface/trackModel';
-import { CategoryModel } from '../../interface/categoryModel';
+import { Track } from '../../Models/trackModel';
+import { CategoryModel } from '../../Models/categoryModel';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class TracksService {
   constructor(private http: HttpClient) {}
 
   getHeaders(){
-    const token = sessionStorage.getItem('token_user');
+    const token = localStorage.getItem('token_user');
     const headers = { Authorization: `Bearer ${token}` };
     return headers;
   }
@@ -25,14 +25,14 @@ export class TracksService {
     )
   }
 
-  updateTrack(form:Track , id:number): Observable<Track> {
+  updateTrack(form:Track , id:string): Observable<Track> {
     const headers = this.getHeaders();
     return this.http.put<Track>(environment.apiUrlBase+'/tracks/'+id, form, { headers }).pipe(
       catchError(this.handleError)
     );
   }
 
-  getTrack(id:number): Observable<any> {
+  getTrack(id:string): Observable<any> {
     const headers = this.getHeaders();
     return this.http.get<any>(environment.apiUrlBase+'/tracks/'+id, { headers }).pipe(
       catchError(this.handleError)
@@ -52,9 +52,9 @@ export class TracksService {
     );
   }
 
-      //CATEGORIAS
+          //CATEGORIAS
 
-  getTracksByCategory(category_id: number): Observable<any> {
+  getTracksByCategory(category_id: string): Observable<any> {
     return this.http.get<any>(environment.apiUrlBase+'/tracks/by-category/'+category_id).pipe(
       catchError(this.handleError)
     );
@@ -62,6 +62,12 @@ export class TracksService {
 
   getCategories(): Observable<any>{
     return this.http.get<any>(environment.apiUrlBase+'/categories').pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  getCategory(idCategory: any): Observable<any>{
+    return this.http.get<any>(environment.apiUrlBase+'/categories/'+idCategory).pipe(
       catchError(this.handleError)
     )
   }

@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
 import { TracksService } from '../../../../services/tracks/tracks.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,13 +13,14 @@ import { CommonModule } from '@angular/common';
   templateUrl: './add-category.component.html',
   styleUrl: './add-category.component.css'
 })
-export class AddCategoryComponent implements OnInit {
+export class AddCategoryComponent implements OnInit, OnDestroy {
   errorMessage: string = "";
   submitted: boolean = false;
   categories?: any;
   @Input() delete_cat:boolean = false;
   @Input() edit_cat:boolean = false;
   form: FormGroup = new FormGroup({});
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     private trackService: TracksService, 
@@ -35,22 +37,21 @@ export class AddCategoryComponent implements OnInit {
     )
 
     this.getCategories();
-
-    console.log("edit: ",this.edit_cat);
-    console.log("delete:", this.delete_cat);
   }
 
   getCategories(){
-    this.trackService.getCategories().subscribe({
-      next: (categories) => {
-        this.categories = categories
-      },
-      error: (errorData) => {
-        console.error(errorData);
-        this.errorMessage = errorData;
-      }, 
-      complete: () => {}
-    })
+    this.subscriptions.add(
+      this.trackService.getCategories().subscribe({
+        next: (categories) => {
+          this.categories = categories
+        },
+        error: (errorData) => {
+          console.error(errorData);
+          this.errorMessage = errorData;
+        }, 
+        complete: () => {}
+      })
+    )
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -66,62 +67,70 @@ export class AddCategoryComponent implements OnInit {
 
     if(!this.edit_cat && !this.delete_cat !){
       if (this.form.valid) {
-        this.trackService.addCategory(this.form.value).subscribe({
-          next: (category) => {
-            console.log(category)
-          },
-          error: (errorData) => {
-            console.error(errorData);
-            this.errorMessage = errorData;
-          },
-          complete: () => {
-            this.router.navigate(['/admin_panel']);
-            this.form.reset();
-          }
-        });
+        this.subscriptions.add(
+          this.trackService.addCategory(this.form.value).subscribe({
+            next: (category) => {
+              console.log(category)
+            },
+            error: (errorData) => {
+              console.error(errorData);
+              this.errorMessage = errorData;
+            },
+            complete: () => {
+              this.router.navigate(['/admin_panel']);
+              this.form.reset();
+            }
+          })
+        )   
       } else {
         return;
       }
     } else if (this.delete_cat){
       if (this.form.valid) {
         const selectedCategoryId = this.form.value.name;
-        this.trackService.deleteCategory(selectedCategoryId).subscribe({
-          next: (category) => {
-            console.log(category)
-          },
-          error: (errorData) => {
-            console.error(errorData);
-            this.errorMessage = errorData;
-          },
-          complete: () => {
-            this.router.navigate(['/admin_panel']);
-            this.form.reset();
-          }
-        });
+        this.subscriptions.add(
+          this.trackService.deleteCategory(selectedCategoryId).subscribe({
+            next: (category) => {
+              console.log(category)
+            },
+            error: (errorData) => {
+              console.error(errorData);
+              this.errorMessage = errorData;
+            },
+            complete: () => {
+              this.router.navigate(['/admin_panel']);
+              this.form.reset();
+            }
+          })
+        )
       } else {
         return;
       }
     } else {
       if (this.form.valid) {
         const idCategory = this.form.value.id;
-        this.trackService.editCategory(this.form.value, idCategory).subscribe({
-          next: (category) => {
-            console.log(category)
-          },
-          error: (errorData) => {
-            console.error(errorData);
-            this.errorMessage = errorData;
-          },
-          complete: () => {
-            this.router.navigate(['/admin_panel']);
-            this.form.reset();
-          }
-        });
+        this.subscriptions.add(
+          this.trackService.editCategory(this.form.value, idCategory).subscribe({
+            next: (category) => {
+              console.log(category)
+            },
+            error: (errorData) => {
+              console.error(errorData);
+              this.errorMessage = errorData;
+            },
+            complete: () => {
+              this.router.navigate(['/admin_panel']);
+              this.form.reset();
+            }
+          })
+        ) 
       } else {
         return;
       }
     }
-    
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 }
