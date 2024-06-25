@@ -38,7 +38,7 @@ export class AvatarComponent implements OnInit, OnChanges, OnDestroy {
 
       if(this.ImageName){
         this.getAvatar(this.ImageName);
-        console.log("Hay cambios: " ,this.ImageName)
+        //console.log("Hay cambios: " ,this.ImageName)
       }
     }
   }

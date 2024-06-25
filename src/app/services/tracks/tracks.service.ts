@@ -25,14 +25,14 @@ export class TracksService {
     )
   }
 
-  updateTrack(form:Track , id:string): Observable<Track> {
+  updateTrack(form:Track , id:number): Observable<Track> {
     const headers = this.getHeaders();
     return this.http.put<Track>(environment.apiUrlBase+'/tracks/'+id, form, { headers }).pipe(
       catchError(this.handleError)
     );
   }
 
-  getTrack(id:string): Observable<any> {
+  getTrack(id:number): Observable<any> {
     const headers = this.getHeaders();
     return this.http.get<any>(environment.apiUrlBase+'/tracks/'+id, { headers }).pipe(
       catchError(this.handleError)
@@ -54,8 +54,8 @@ export class TracksService {
 
           //CATEGORIAS
 
-  getTracksByCategory(category_id: string): Observable<any> {
-    return this.http.get<any>(environment.apiUrlBase+'/tracks/by-category/'+category_id).pipe(
+  getTracksByCategory(category_id: number, page?:number, perPage?:number): Observable<any> {
+    return this.http.get<any>(environment.apiUrlBase+'/tracks/by-category/'+category_id+'?page='+page+'&perPage='+perPage).pipe(
       catchError(this.handleError)
     );
   }

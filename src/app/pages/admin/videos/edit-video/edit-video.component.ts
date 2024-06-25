@@ -11,7 +11,7 @@ import { NewVideoComponent } from '../new-video/new-video.component';
 })
 export class EditVideoComponent implements OnInit{
   edit:boolean =true; 
-  @Input('id') id!:string;
+  @Input('id') id!:number;
 
  constructor(private route: ActivatedRoute){}
  

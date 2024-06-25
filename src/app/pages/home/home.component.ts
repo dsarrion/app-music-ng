@@ -2,11 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ContentComponent } from '../../components/content/content.component';
 import { TracksService } from '../../services/tracks/tracks.service';
 import { Subscription } from 'rxjs';
+import { SpinnerComponent } from '../../components/spinner/spinner.component';
+import { TrendsComponent } from '../../components/trends/trends.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ContentComponent],
+  imports: [ContentComponent, SpinnerComponent, TrendsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -22,12 +24,14 @@ export class HomeComponent implements OnInit, OnDestroy{
     this.getCategoriesWithTracks();
   }
 
-  async getCategoriesWithTracks() {
+  getCategoriesWithTracks() {
     this.subscriptions.add(
-      await this.trackService.getCategories().subscribe({
+      this.trackService.getCategories().subscribe({
         next: (categories) => {
+          //console.log("categories:",categories);
           this.trackService.getAllTracks().subscribe({
             next: (tracks) => {
+              //console.log("tracks:", tracks);
               const idsCategories = new Set(tracks.map((track: any) => track.category_id)); // Sacar los ids de las categorias
               this.categories = categories.filter((category: any) => idsCategories.has(category.id)); // Filtrar las categorías con tracks
             },
@@ -35,15 +39,12 @@ export class HomeComponent implements OnInit, OnDestroy{
               console.error(errorData);
               this.errorMessage = errorData;
             },
-            complete: () => {
-              //console.log("Categorías recibidas correctamente", this.categories);
-            }
           })
         },
         error: (errorData) => {
           console.error(errorData);
           this.errorMessage = errorData;
-        }
+        },
       })
     )
   }

@@ -81,11 +81,7 @@ export class UserService {
   }
 
   getUserData(): Observable<User> {
-    const token = localStorage.getItem('token_user');
-    if(!token){
-      return throwError(() => new Error('Token no encontrado.'));
-    }
-    const headers = { Authorization: `Bearer ${token}` };
+    const headers = this.getHeaders();
     return this.http.get<User>(environment.apiUrlBase+"/user", { headers }).pipe(
       catchError(this.handleError)
     )

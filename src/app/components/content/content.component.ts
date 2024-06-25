@@ -22,24 +22,44 @@ export class ContentComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private trackService: TracksService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if(this.category.name == "Mas Populares"){
+      this.getTrensTracks();
+    }
+      
     if (changes['category'] && this.category) {
-      this.getTracks(this.category.id);
+      if(this.category.name == "Mas Populares"){
+        this.getTrensTracks();
+      }else{
+        this.getTracks(this.category.id);
+      }
     }
   }
 
-  //Obtener tracks por categoria
-  async getTracks(category_id:any){
+  getTrensTracks(){
     this.subscriptions.add(
-      await this.trackService.getTracksByCategory(category_id).subscribe({
+      this.trackService.getAllTracks().subscribe({
+        next: (response) => {
+          const tracks = response;
+          // Ordena los tracks por número de likes en orden descendente
+        const sortedTracks = tracks.sort((a: any, b: any) => b.likes - a.likes);
+        this.videos = sortedTracks.slice(0, 6);
+        }
+      })
+    )
+  }
+
+  //Obtener tracks por categoria
+  getTracks(category_id:any){
+    this.subscriptions.add(
+      this.trackService.getTracksByCategory(category_id).subscribe({
         next: (response) => {
           // Ordenar los videos por mas recientes primero
-          this.videos = response.data.sort((a: any, b: any) => {
-            return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-          // Limitar la cantidad de tracks a 5
-          });
+          this.videos = response.data;
           this.videos = this.videos.slice(0, 6);
         },
         error: (errorTracks) => {

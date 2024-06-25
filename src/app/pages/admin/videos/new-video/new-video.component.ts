@@ -19,7 +19,7 @@ export class NewVideoComponent implements OnInit, OnDestroy {
   track?: Track;
   errorMessage: string = "";
   @Input() edit:boolean = false;
-  @Input() idTrack?: string;
+  @Input() idTrack?: number;
   submitted:boolean = false;
   form: FormGroup = new FormGroup({});
   private subscriptions: Subscription = new Subscription();

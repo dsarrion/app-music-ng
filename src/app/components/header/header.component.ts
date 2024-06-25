@@ -18,12 +18,14 @@ import { AvatarComponent } from '../avatar/avatar.component';
 export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
   @Input() userData?: User;
   @Input() userLoginOn: boolean = false;
-  title: string = "DJsConTalento";
+  admin: boolean = false;
+  title: string = "TalentoDJs";
   categories?: any;
   errorMessage: string ="";
   urlImage: string = environment.apiUrlBase+'/user/avatar/';
   imageName: string | undefined;
   isDropdownOpen: boolean = false;
+  isDropdownCategoryOpen: boolean = false;
   hideTimeout: any;
   private subscriptions: Subscription = new Subscription();
 
@@ -48,6 +50,10 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
         this.imageName = undefined;
         //console.log('userData ha cambiado a undefined');
       }
+    }
+
+    if(this.userData?.role === "ADMIN_1"){
+      this.admin = true;
     }
   }
 
@@ -80,6 +86,7 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
   logout(){
     this.userService.logout();
     this.router.navigate(['/inicio']);
+    this.admin = false;
     console.log("Usuario LOGOUT correcto");
   }
 
@@ -102,6 +109,28 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
     // Retrasar la acción de ocultar
     this.hideTimeout = setTimeout(() => {
       this.isDropdownOpen = false;
+    }, 200);
+  }
+
+  expandCollapseCategory() {
+    const dropdown = document.getElementById('cat-drop-down');
+    if (dropdown) {
+      dropdown.classList.toggle('hidden');
+    }
+  }
+
+  showDropdownCategory() {
+    // Cancelar la ocultacion si vuelve el mouse
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+    }
+    this.isDropdownCategoryOpen = true;
+  }
+
+  hideDropdownCategory() {
+    // Retrasar la acción de ocultar
+    this.hideTimeout = setTimeout(() => {
+      this.isDropdownCategoryOpen = false;
     }, 200);
   }
 

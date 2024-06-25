@@ -23,9 +23,9 @@ export class AvatarIconComponent implements OnInit, OnDestroy{
    this.getIconAvatar(this.ImageName);
  }
 
-  async getIconAvatar(name: string | undefined){
+  getIconAvatar(name: string | undefined){
     this.subcriptions.add(
-      await this.userService.getIconAvatar(name).subscribe({
+      this.userService.getIconAvatar(name).subscribe({
         next: (data: any) => {
           this.isLoading = false;
         },

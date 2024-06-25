@@ -1,5 +1,5 @@
-@if(isLoading){
-    <img class="object-cover opacity-70 rounded-full size-8" src="assets/img/picture-profile-icon.jpg" alt="Cargando">
+@if(isLoading){ 
+    <img class="object-cover opacity-20 size-8 rounded-full" src="assets/img/picture-profile-icon.jpg" alt="Cargando">
 }@else{
-    <img class="object-cover opacity-70 rounded-full size-8" [src]="urlImage+ImageName" alt="Foto">
+    <img class="object-cover opacity-70 size-9 rounded-full ring-1 ring-sky-700/90 p-[2px]" [src]="urlImage+ImageName" alt="Foto">
 }

@@ -22,8 +22,13 @@ export class RegistroComponent implements OnInit, OnDestroy {
   userData?: User;
   submitted = false;
   errorMessage:string = "";
+  registerMessage:string = "";
+  registerMessage2:string = "";
+  registerTrue: boolean = false;
   updateMessage: string = "";
+  updateMessage2: string = "";
   form: FormGroup = new FormGroup({});
+  originalFormData: any = {};
   selectedFile: File | null = null;
   urlImage: string = environment.apiUrlBase+'/user/avatar/';
   avatarChange: boolean = false;
@@ -46,7 +51,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
         password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(40)]],
         vpass: ['', Validators.required],
         avatar: ['', Validators.maxLength(100)],
-        acceptTerms: [false, Validators.requiredTrue]
       },
       {
         validators: [Validation.match('password', 'vpass')]
@@ -56,7 +60,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
       if (this.edit) {
         this.form.get('password')!.disable();
         this.form.get('vpass')!.disable();
-        this.form.get('acceptTerms')!.disable();
         this.loadUserData();
       }
 
@@ -126,7 +129,8 @@ export class RegistroComponent implements OnInit, OnDestroy {
               surname: this.userData.surname,
               nick: this.userData.nick,
               email: this.userData.email
-            })
+            });
+            this.originalFormData = {...this.form.value}; //Guarda los valores originales
           }
         },
         error: (errorData) => {
@@ -144,15 +148,24 @@ export class RegistroComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.userService.register(this.form.value).subscribe({
         next: (userData) => {
-          console.log('Usuario registrado CORRECTAMENTE');
-          this.router.navigate(['/inicio']);
-          this.form.reset();
+          console.log('Usuario registrado CORRECTAMENTE');  
         },
         error: (errorData) => {
           console.error(errorData);
           this.errorMessage = errorData
         },
-        complete: () => {}
+        complete: () => {
+          this.registerTrue = true;
+          this.registerMessage = "Usuario registrado CORRECTAMENTE";
+          this.registerMessage2 = "Ya puedes Iniciar Sesión";
+          setTimeout ( () => {
+            this.registerMessage = "";
+            this.registerMessage2 = "";
+            this.registerTrue = false;
+            this.router.navigate(['/login']);
+            this.form.reset();
+          },5000);
+        }
       })
     );
   }
@@ -161,7 +174,21 @@ export class RegistroComponent implements OnInit, OnDestroy {
   updateUser() {
     //Copia de valores de formulario
     const formData = {...this.form.value};
+    
+    // Obtener valores originales del formulario
+    const originalFormData = this.originalFormData || {};
+
+    // Verificar si ha habido cambios
+    const hasChanges = Object.keys(formData).some(key => formData[key] !== originalFormData[key]);
+    
     //Eliminar avatar si no ha cambiado para no enviar null
+    if (!hasChanges) {
+      this.updateMessage2 = "No se ha modificado ningún parámetro";
+      setTimeout(() => {
+        this.updateMessage2 = "";
+      }, 3000);
+      return;
+    }
     if(!this.avatarChange){
       delete formData.avatar;
     }
@@ -182,6 +209,9 @@ export class RegistroComponent implements OnInit, OnDestroy {
           // Limpiar el campo avatar
           this.form.patchValue({ avatar: '' });
           this.avatarChange = false;
+          console.log("Datos actualizados");
+          // Actualiza los valores originales después de la actualización
+          this.originalFormData = {...this.form.value};
         }
       })
     );

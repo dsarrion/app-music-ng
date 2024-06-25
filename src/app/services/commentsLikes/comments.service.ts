@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,8 @@ export class CommentsService {
     return headers;
   }
 
+  //COMMENTS
+
   getCommentsByVideo(id:number): Observable<any>{
     return this.http.get<any>(environment.apiUrlBase+'/comments/by-video/'+id).pipe(
       catchError(this.handleError))
@@ -23,6 +25,33 @@ export class CommentsService {
 
   createComment(form: FormData): Observable<any>{
     return this.http.post<any>(environment.apiUrlBase+'/comments', form).pipe(
+      catchError(this.handleError))
+  }
+
+  //LIKES
+
+  createLike(userId: number, trackId: number): Observable<any>{
+    const headers = this.getHeaders();
+    const body = { user_id: userId, track_id: trackId };
+    return this.http.post<any>(environment.apiUrlBase+'/likes', body, { headers }).pipe(
+      catchError(this.handleError))
+  }
+
+  deleteLike(id:number){
+    const headers = this.getHeaders();
+    return this.http.delete<any>(environment.apiUrlBase+'/likes/'+ id, { headers }).pipe(
+      catchError(this.handleError))
+  }
+
+  hasLike(userId: number, trackId: number): Observable<any>{
+    const headers = this.getHeaders();
+    return this.http.get<any>(environment.apiUrlBase+'/likes/user/'+userId+'/track/'+trackId, { headers }).pipe(
+      catchError(this.handleError))
+  }
+
+  getTracksLikes(userId: number, page?:number, perPage?:number): Observable<any>{
+    const headers = this.getHeaders();
+    return this.http.get<any>(environment.apiUrlBase+'/tracks/likes/user/'+userId+'?page='+page+'&perPage='+perPage, { headers }).pipe(
       catchError(this.handleError))
   }
 

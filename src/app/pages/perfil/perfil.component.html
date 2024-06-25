@@ -1,8 +1,10 @@
 <app-perfil-option></app-perfil-option>
-@if(userData){
-<section class="flex flex-col w-full items-center justify-center">
+@if(!userData){
+<app-spinner></app-spinner>
+}@else {
+<section class="flex flex-col w-full items-center justify-center cursor-default">
     <div class="flex items-center mb-8">
-        <div class="p-0.5 ring-2 ring-gray-600 rounded-full">
+        <div class="-z-10 p-0.5 ring-2 ring-sky-700/90 rounded-full">
             <app-avatar [size]=50></app-avatar>
         </div>
         <div class="px-3">
@@ -37,7 +39,7 @@
         </dl>
 
     </div>
-    <div class="flex flex-row justify-center mb-2 italic text-sm md:text-base text-gray-400">
+    <div class="flex flex-row justify-center mt-2 mb-6 italic text-sm md:text-base text-gray-400">
         <span>Te uniste a la comunidad <b>TalentoDJs</b> el: {{ createdDate | date: 'dd/MM/yyyy' }}</span>
 
     </div>

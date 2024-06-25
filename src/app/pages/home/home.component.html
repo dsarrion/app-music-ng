@@ -1,3 +1,8 @@
-@for(category of categories; track category.id){
-    <app-content [category]="category"></app-content>
+@if(!categories){
+    <app-spinner></app-spinner>
+}@else {
+    @for(category of categories; track category.id){
+        <app-content [category]="category"></app-content>
+    }
+    <app-trends></app-trends>
 }

@@ -12,21 +12,21 @@
   <div class="overflow-x-auto snap-x">
     <ul class="w-max flex flex-nowrap group">
       @for(video of videos; track video){
-      <li class="w-full py-3 lg:py-4 px-2 lg:px-3">
+      <li class= "w-full py-3 lg:py-4 px-2 lg:px-3">
         <div
-          class="max-w-56 lg:max-w-xs h-full flex flex-col snap-center snap-always duration-300 group-hover:opacity-80 hover:!opacity-100 border rounded-lg shadow bg-gray-800 border-gray-700">
+          class="max-w-56 lg:max-w-xs h-full p-0.5 flex flex-col snap-center snap-always duration-300 group-hover:opacity-80 hover:!opacity-100 rounded-lg shadow bg-gray-700/30">
           <!--Sacar imagen de video-->
           <a [routerLink]="['/sesion', video.id]">
-            <div class="w-full">
+            <div class="w-full rounded-t-lg overflow-hidden">
               @if(video.url){
-                <img class="rounded-t-lg" src="{{getThumb(video.url, 'sddefault')}}" alt="sesionDj" />
+                <img class="-my-6 lg:-my-8" src="{{getThumb(video.url, 'sddefault')}}" alt="sesionDj" />
                 }@else {
-                <img class="rounded-t-lg" src="/src/assets/img/default-video.jpg" alt="error" />
+                <img class="opacity-30" src="assets/img/default-video.jpg" alt="error" />
                 }
             </div> 
-            <div class="py-1 md:py-3 px-2 md:px-3 max-h-28 flex flex-col items-center justify-center">
-              <h5 class="mb-1 text-center text-base lg:text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                {{video.dj}}</h5>
+            <div class="pb-1 pt-1 md:pt-3 md:pb-2 px-2 max-h-40 flex flex-col items-center justify-between">
+              <h3 class="mb-1 text-center text-base lg:text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                {{video.dj}}</h3>
               <p class="text-sm lg:text-base text-center h-auto text-gray-700 dark:text-gray-400 overflow-hidden">
                 {{video.title}}
               </p>

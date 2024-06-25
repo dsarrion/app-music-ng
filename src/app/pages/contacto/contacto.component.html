@@ -1,1 +1,23 @@
-<h1 class="mt-28 text-white">Contacto</h1>
+<section>
+    <div class="py-10 lg:py-12 px-4 mx-auto max-w-screen-md">
+        <div class="cursor-default">
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-center text-gray-200">Buzón de sugerencias</h2>
+            <p class="mb-8 lg:mb-14 font-light text-center text-gray-400 md:text-xl">¿Te gustaria que añadieramos alguna categoria en concreto?¿Has tenido algun problema técnico? ¿Desea enviarnos alguna sugerencia? Háganoslo saber:</p>
+        </div>
+        <form action="#" class="space-y-8">
+            <div>
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-300">Tu email</label>
+                <input type="email" id="email" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500 shadow-sm-light" placeholder="nombre@ejemplo.com" required>
+            </div>
+            <div>
+                <label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Asunto</label>
+                <input type="text" id="subject" class="block p-3 w-full text-sm rounded-lg border bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500 shadow-sm-light" placeholder="Cuentanos en que podemos ayudarte" required>
+            </div>
+            <div class="sm:col-span-2">
+                <label for="message" class="block mb-2 text-sm font-medium text-gray-400">Tu mensaje</label>
+                <textarea id="message" rows="6" class="block p-2.5 w-full text-sm rounded-lg shadow-sm border bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Deja tu comentario..."></textarea>
+            </div>
+            <button type="submit" class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg sm:w-fit focus:ring-4 focus:outline-none bg-primary-700 hover:bg-primary-800 focus:ring-primary-800">Enviar mensaje</button>
+        </form>
+    </div>
+  </section>

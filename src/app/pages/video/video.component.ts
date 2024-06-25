@@ -5,13 +5,13 @@ import { ContentComponent } from '../../components/content/content.component';
 import {YouTubePlayerModule } from '@angular/youtube-player';
 import { CategoryModel } from '../../Models/categoryModel';
 import { CommonModule, ViewportScroller } from '@angular/common';
-import { Subscription, filter, switchMap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
 import { UnlikeComponent } from '../../components/icon/unlike/unlike.component';
 import { LikeComponent } from '../../components/icon/like/like.component';
 import { CommentsComponent } from '../../components/icon/comments/comments.component';
 import { ShareComponent } from '../../components/icon/share/share.component';
-import { CommentsService } from '../../services/comments/comments.service';
+import { CommentsService } from '../../services/commentsLikes/comments.service';
 import { AvatarComponent } from '../../components/avatar/avatar.component';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
@@ -25,7 +25,7 @@ import { AvatarIconComponent } from '../../components/avatar-icon/avatar-icon.co
   styleUrl: './video.component.css'
 })
 export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input('id') idVideo?: string;
+  @Input('id') idVideo?: number;
   userLoginOn: boolean = false;
   userId?: number;
   submitted: boolean = false;
@@ -33,12 +33,14 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   idVideoYT!: any;
   idCategory!: string;
   category!:CategoryModel;
-  categoryBest:CategoryModel;
+  categoryTrends:CategoryModel;
   errorMessage: string = "";
   comments: { content: string, user_avatar: string, user_nick:string }[] = [];
   avatarUserComment: string | null = null;
   showComments: boolean = false;
   countComments: number = 0;
+  haslike: boolean = false;
+  likeId?: number;
   form: FormGroup = new FormGroup({});
   private subscriptions: Subscription = new Subscription(); 
 
@@ -54,9 +56,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
               private viewportScroller: ViewportScroller,
               private formBuilder: FormBuilder
             ) { 
-    this.categoryBest = {
+    this.categoryTrends = {
       'id': 3,
-      'name': 'Recomendados'
+      'name': 'Mas Populares'
     }
   }
 
@@ -69,15 +71,16 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       this.route.paramMap.subscribe((params: ParamMap) => {
         const id = params.get('id');
         if (id) {
-          this.idVideo = id;
+          this.idVideo = Number(id);
           this.getVideo(this.idVideo);
           this.getCommentsbyVideo(Number(id));
           // Desplazar la página hacia arriba
           this.viewportScroller.scrollToPosition([0, 0]);
+          this.hasLikeId();
         }
       })
     );
-
+    
     this.initializeForm();
   }
 
@@ -98,9 +101,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   //Obtener video para mostrar
-  async getVideo(idVideo:string){
+  getVideo(idVideo:number){
     this.subscriptions.add(
-      await this.trackService.getTrack(idVideo).subscribe({
+      this.trackService.getTrack(idVideo).subscribe({
         next: (track) => {
           this.video = track.data;
           //recoger id de video desde url de YT
@@ -119,8 +122,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   //Obtener categoria del video para mostrar
-  async getCategory(id:string){
-    await this.subscriptions.add(
+  getCategory(id:string){
+    this.subscriptions.add(
       this.trackService.getCategory(id).subscribe({
         next: (category) => {
           this.category = category.data;
@@ -141,7 +144,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
           //console.log('Usuario logueado:',this.userLoginOn);
           if(this.userLoginOn){
             this.getUserData();
-          }  
+          }else{
+            this.hasLikeId();
+          } 
         },
         error: (errorData) => {
           console.error('Error al verificar el estado de login:',errorData)
@@ -156,7 +161,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         next: (dataUser) => {
           this.userId = dataUser?.id;
           if(this.userId){
+            //console.log(this.userId)
             this.form.patchValue({ user_id: this.userId }); //Actualizar el formulario con el id del usuario
+            this.hasLikeId();
           }
           //console.log('Datos del usuario:', dataUser);
         },
@@ -166,28 +173,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     )
   }
-
-  /* //Obtener si usuario esta registrado y id de usuario
-  getUserloginOn(){
-    this.subscriptions.add(
-      this.userService.currentUserLoginOn.pipe(
-        filter((loginOn: boolean) => loginOn),
-        switchMap(() => this.userService.currentUserData)
-      )
-      .subscribe({
-        next: (dataUser) => {
-          this.userId = dataUser?.id;
-          if(this.userId){
-            this.form.patchValue({ user_id: this.userId }); //Actualizar el formulario con el id del usuario
-          } 
-        },
-        error: (errorData) => {
-          console.error(errorData)
-        }
-      })
-    )
-  } */
-
   //Obtener comentarios del video
   getCommentsbyVideo(id:number){
     this.subscriptions.add(
@@ -223,10 +208,59 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     )
   }
-
   //mostrar o ocultar comentarios
   toggleComments() {
     this.showComments = !this.showComments;
+  }
+
+  //LIKES
+
+  hasLikeId(){
+    if(this.userId && this.idVideo){
+      this.subscriptions.add(
+        this.commentService.hasLike(this.userId!, this.idVideo).subscribe({
+          next: (response) =>{
+            this.haslike = response.hasLike;
+            if(this.haslike){
+              this.likeId = response.like.id;
+            }
+            //console.log('Response from backend:', response.hasLike);
+          },
+          error: (error) => {
+            console.error('Error al verificar like:', error)
+          }
+        })
+      )
+    }
+  }
+
+  addFavorite(){
+    this.subscriptions.add(
+      this.commentService.createLike(this.userId!, Number(this.idVideo)).subscribe({
+        next: (response) =>{
+          this.haslike = true;
+          this.likeId = response.data.id;
+          console.log(response.message);
+        },
+        error: (error) => {
+          console.error('Error al enviar like:', error)
+        }
+      })
+    )
+  }
+
+  deleteFavorite(){
+    this.subscriptions.add(
+      this.commentService.deleteLike(this.likeId!).subscribe({
+        next: (response) =>{
+          this.haslike = false;
+          console.log(response.message);
+        },
+        error: (error) => {
+          console.error('Error al borrar like:', error)
+        }
+      })
+    )
   }
 
   get f(): { [key: string]: AbstractControl } {

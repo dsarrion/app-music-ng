@@ -15,6 +15,7 @@ import { DeleteCatComponent } from './pages/admin/category/delete-cat/delete-cat
 import { EditCatComponent } from './pages/admin/category/edit-cat/edit-cat.component';
 import { VideoComponent } from './pages/video/video.component';
 import { AjustesComponent } from './pages/ajustes/ajustes.component';
+import { FavoritesComponent } from './pages/favorites/favorites.component';
 
 export const routes: Routes = [
     {path: "", redirectTo:'/inicio', pathMatch:'full'},
@@ -26,6 +27,7 @@ export const routes: Routes = [
     {path: "login", component: LoginComponent},
     {path: "ajustes", component: AjustesComponent},
     {path: "perfil", component: PerfilComponent},
+    {path: "favoritos", component: FavoritesComponent},
     {path: "admin_panel", component: AdminPanelComponent},
     {path: "videoUpload", component: NewVideoComponent},
     {path: "all_videos", component: AllVideosComponent},

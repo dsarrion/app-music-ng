@@ -5,48 +5,58 @@
     <!--MENU NAV-->
     <div class="items-center mx-10 justify-between hidden w-full md:flex md:w-auto order-2" id="navbar-user">
       <ul
-        class="flex md:flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:space-x-4 space-x-6 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:border-gray-700">
+        class="flex md:flex flex-col text-blue-200 p-4 md:p-0 mt-4 border rounded-lg md:space-x-4 space-x-6 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 border-gray-700">
         <li>
-          <a routerLink="/inicio" routerLinkActive="text-blue-500"
-            class="block py-2 px-3 rounded md:p-0 text-white md:hover:text-blue-500"
+          <a routerLink="/inicio" routerLinkActive="text-blue-500/90"
+            class="block py-2 px-3 rounded md:p-0 md:hover:text-blue-500/90"
             aria-current="page">INICIO</a>
         </li>
-        <li class="relative">
-          <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
-            class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">CATEGORIAS<svg
-              class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+        <li class="relative" (mouseover)="showDropdownCategory()" (mouseout)="hideDropdownCategory()" routerLinkActive="text-blue-500/90">
+          <button (click)="expandCollapseCategory()" 
+              class="flex items-center justify-between w-full py-2 px-3 rounded md:border-0 md:p-0 md:w-auto md:hover:text-blue-500/90 border-gray-700 hover:bg-gray-700 md:hover:bg-transparent">
+              CATEGORIAS
+              <svg class="w-2.5 h-2.5 ms-2.5" xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="m1 1 4 4 4-4" />
             </svg>
           </button>
           <!-- Desplegable Categorias -->
-          <div id="dropdownNavbar"
-            class="z-50 hidden w-full border border-gray-700 bg-gray-700/95 font-normal divide-gray-100 rounded-lg shadow md:w-44 ">
-            <ul class="py-2 m-4 text-sm text-gray-200" aria-labelledby="dropdownLargeButton">
+          <div [class.hidden]="!isDropdownCategoryOpen" id="cat-drop-down" 
+              class="absolute md:-right-7 w-full z-50 mt-1 border border-gray-700 bg-gray-700/95 font-normal divide-gray-100 rounded-lg shadow md:w-44 ">
+            <ul class="m-2 text-sm text-gray-200">
               @for(category of categories; track category.id){
               <li>
-                <a [routerLink]="['/categoria', category.id]" routerLinkActive="text-blue-500"
-                  class="block px-4 py-2 hover:bg-gray-100 hover:rounded dark:hover:bg-gray-500 dark:hover:text-white">{{category.name}}</a>
+                <a [routerLink]="['/categoria', category.id]" routerLinkActive="text-blue-500/90 hover:text-blue-500/90 hover:bg-transparent"
+                  class="block px-2 py-1.5 hover:rounded hover:bg-gray-500 hover:text-white">
+                  {{category.name}}
+                </a>
               </li>
               }
-
+              @if(userLoginOn){
+                <li>
+                  <a routerLink="/favoritos" routerLinkActive="text-blue-500/90"
+                    class="block px-2 py-1 hover:rounded hover:bg-gray-500 hover:text-white border-t-[1px] border-slate-500">
+                    Mis favoritos
+                  </a>
+                </li>
+              }
             </ul>
           </div>
         </li>
         <li>
-          <a routerLink="/contacto" routerLinkActive="text-blue-500"
-            class="block py-2 px-3 rounded md:p-0 text-white md:hover:text-blue-500">CONTACTO</a>
+          <a routerLink="/contacto" routerLinkActive="text-blue-500/90"
+            class="block py-2 px-3 rounded md:p-0 md:hover:text-blue-500/90">CONTACTO</a>
         </li>
       </ul>
     </div>
 
-    <!--LOGO Y NOMBRE WEB-->
+    <!--LOGO Y TITULO WEB-->
     <div class="hidden w-20 mt-1 ml-4">
       <img src="assets/img/logo-r.webp" class="h-12 sm:h-14" alt="Logo" />
     </div> 
-    <a routerLink="/inicio" class="w-full md:w-auto flex justify-center items-center ml-4 order-3 md:order-1 md:ml-6 space-x-3 rtl:space-x-reverse">
-      <h1 class="self-center text-2xl font-semibold whitespace-nowrap text-white italic">{{title}}</h1>
+    <a routerLink="/inicio" class="w-full md:w-auto flex justify-center items-center ml-4 order-3 md:order-1 md:ml-4 lg:ml-6 space-x-3 rtl:space-x-reverse">
+      <h1 class="self-center text-2xl font-semibold whitespace-nowrap text-slate-200 italic shadow-gray-200 drop-shadow-lg">🔥 ​{{title}} 🔥​</h1>
     </a>
 
     <!--LOGIN O USUARIO-->
@@ -55,56 +65,60 @@
       @if(!userLoginOn){
       <div class="hidden md:flex items-center space-x-1 md:space-x-2 md:mr-2 lg:mr-3 rtl:space-x-reverse">
         <a routerLink="login"
-          class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font font-medium rounded-lg text-xs lg:text-sm px-2 py-1 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Login</a>
+          class="text-white focus:ring-2 font font-medium rounded-lg text-xs lg:text-sm px-2 py-1 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 bg-gray-600/50 hover:bg-gray-700 focus:outline-none">Login</a>
         <a routerLink="registro"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs lg:text-sm px-2 py-1 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Registro</a>
+          class="text-white focus:ring-2 font font-medium rounded-lg text-xs lg:text-sm px-2 py-1 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 bg-blue-700 hover:bg-blue-600 focus:outline-none">Registro</a>
       </div>
       }
 
       <!--Usuario Menu-->
       @if(userLoginOn && userData){
       <div class=" hidden md:flex mr-4 sm:mr-1 items-center space-x-1 text-xs lg:text-sm md:space-x-0 md:mr-4 rtl:space-x-reverse">
-        <div class="hidden sm:flex">
+        <div class="hidden sm:flex cursor-default">
           <span class="text-gray-400 hidden lg:flex italic pr-1">Hola</span>
           <span class="text-gray-400 lg:text-gray-300 pr-0 md:pr-2">'{{userData.nick}}'</span>
         </div>
-        <div class="relative inline-block" (mouseover)="showDropdown()" (mouseout)="hideDropdown()">
-          <button type="button"
-            class="flex text-sm bg-gray-900 rounded-full p-0.5 m-0.5 ring-2 ring-gray-600 hover:ring-2 hover:ring-gray-500 dark:focus:ring-gray-600"
-            id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
-            data-dropdown-placement="bottom" (click)="expandCollapse()">
+        <div class="relative inline-block group hover:ring-blue-700/80" (mouseover)="showDropdown()" (mouseout)="hideDropdown()">
+          <button type="button" id="user-menu-button" (click)="expandCollapse()"
+            class="flex text-sm bg-gray-900 rounded-full p-0.5 m-0.5 ring-2 ring-sky-800/80 group-hover:ring-sky-700/90">
             <span class="sr-only">Abrir Menu Desplegable</span>
-
             <app-avatar [size]="40" [ImageName]="imageName" [userName]="userData.name"></app-avatar>
           </button>
           <!-- Desplegable Usuario Menu -->
           <div [class.hidden]="!isDropdownOpen"
-            class="absolute -right-6 sm:-right-2 md:-right-5 z-50 mt-1 w-32 origin-top-right text-base divide-y rounded-lg shadow bg-gray-700 sm:bg-gray-700/95 divide-gray-600"
+            class="absolute -right-0 z-50 mt-1 w-32 origin-top-right text-gray-200 text-base divide-y rounded-lg shadow bg-gray-700 sm:bg-gray-700/95 divide-gray-600"
             id="user-dropdown">
-            <div class="px-4 py-3">
+            <div class="px-4 py-3 cursor-default">
               <span class="block text-sm text-gray-900 dark:text-white">{{userData.name+' '+userData.surname}}</span>
-              <span class="block text-xs text-gray-500 italic truncate dark:text-gray-400">TalentoDJs</span>
+              <span class="block text-xs italic truncate text-gray-400">TalentoDJs</span>
             </div>
             <ul class="py-2" aria-labelledby="user-menu-button">
               <li>
-                <a routerLink="admin_panel"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                  Admin Panel</a>
+                <a routerLink="favoritos" routerLinkActive="text-blue-500/90"
+                  class="block px-4 py-2 text-sm hover:bg-gray-600 hover:text-white">
+                  Mis Favoritos</a>
               </li>
               <li>
-                <a routerLink="/perfil"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                  Mi perfil</a>
+                <a routerLink="/perfil" routerLinkActive="text-blue-500/90"
+                  class="block px-4 py-2 text-sm hover:bg-gray-600 hover:text-white">
+                  Mi Perfil</a>
               </li>
               <li>
-                <a routerLink="/ajustes"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                <a routerLink="/ajustes" routerLinkActive="text-blue-500/90"
+                  class="block px-4 py-2 text-sm hover:bg-gray-600 hover:text-white">
                   Ajustes</a>
               </li>
+              @if(admin){
+                <li>
+                  <a routerLink="admin_panel" routerLinkActive="text-blue-500/90"
+                    class="block px-4 py-2 text-sm hover:bg-gray-600 hover:text-white">
+                    Admin Panel</a>
+                </li>
+              }
               <li>
                 <a (click)="logout()"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                  Cerrar sesión</a>
+                  class="block px-4 py-2 text-sm cursor-pointer hover:bg-gray-600 hover:text-white">
+                  Cerrar Sesión</a>
               </li>
             </ul>
           </div>

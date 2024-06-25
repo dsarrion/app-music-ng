@@ -5,11 +5,12 @@ import { Subscription } from 'rxjs';
 import { UserService } from '../../services/user/user.service';
 import { AvatarComponent } from '../../components/avatar/avatar.component';
 import { CommonModule } from '@angular/common';
+import { SpinnerComponent } from '../../components/spinner/spinner.component';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [PerfilOptionComponent, AvatarComponent, CommonModule],
+  imports: [PerfilOptionComponent, AvatarComponent, CommonModule, SpinnerComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
