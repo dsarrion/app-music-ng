@@ -1,0 +1,136 @@
+                    Licencia Pública General de GNU
+                       Versión 3, 29 de junio de 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+ Todos pueden copiar y distribuir copias exactas de este documento de licencia, pero no está permitido cambiarlo.
+
+                            Preámbulo
+
+ La Licencia Pública General de GNU es una licencia libre de copyleft para software y otros tipos de obras.
+
+ Las licencias de la mayoría del software y otros trabajos prácticos están diseñadas para quitarle la libertad de compartir y cambiar las obras. Por el contrario, la Licencia Pública General de GNU está destinada a garantizar su libertad para compartir y cambiar todas las versiones de un programa, para asegurarse de que siga siendo software libre para todos sus usuarios. Nosotros, la Free Software Foundation, usamos la Licencia Pública General de GNU para la mayoría de nuestro software; también se aplica a cualquier otro trabajo publicado de esta manera por sus autores. Puede aplicarla a sus programas, también.
+
+ Cuando hablamos de software libre, nos referimos a la libertad, no al precio. Nuestras Licencias Públicas Generales están diseñadas para asegurarse de que tenga la libertad de distribuir copias de software libre (y cobrar por ellas si lo desea), que reciba el código fuente o pueda obtenerlo si lo desea, que pueda cambiar el software o usar partes de él en nuevos programas libres, y que sepa que puede hacer estas cosas.
+
+ Para proteger sus derechos, necesitamos evitar que otros le nieguen estos derechos o le pidan que renuncie a los derechos. Por lo tanto, tiene ciertas responsabilidades si distribuye copias del software, o si lo modifica: responsabilidades para respetar la libertad de los demás.
+
+ Por ejemplo, si distribuye copias de un programa de este tipo, ya sea gratis o por una tarifa, debe pasar a los destinatarios las mismas libertades que recibió. Debe asegurarse de que también reciban o puedan obtener el código fuente. Y debe mostrarles estos términos para que conozcan sus derechos.
+
+ También protegemos sus derechos con dos pasos: (1) el copyright en el software, y (2) una oferta legal que le da permiso para copiar, distribuir y/o modificar el software.
+
+ Para la protección de cada autor y editor, la GPL explica claramente que no hay garantía para este software libre. Para el bien de los usuarios y autores, la GPL requiere que las versiones modificadas se marquen como cambiadas, para que sus problemas no se atribuyan erróneamente a los autores de versiones anteriores.
+
+ Algunos dispositivos están diseñados para negar a los usuarios acceso a instalar o ejecutar versiones modificadas del software que funcionan en ellos, aunque el fabricante puede hacerlo. Esta es fundamentalmente incompatible con el objetivo de proteger la libertad de los usuarios de modificar el software. El sistema de protección contra copia de tales dispositivos es un problema que se aborda efectivamente con la prohibición de esta práctica.
+
+ Finalmente, todo programa está amenazado constantemente por patentes de software. Los estados no deben permitir la imposición de restricciones a la programación en general. Por lo tanto, es la intención de la GPL prohibir explícitamente la restricción de un programa por parte de patentes.
+
+ Los términos y condiciones precisos para la copia, distribución y modificación se siguen.
+
+                            Términos y condiciones
+
+ 0. Definiciones.
+
+ "Esta Licencia" se refiere a la versión 3 de la Licencia Pública General de GNU.
+
+ "Derechos de autor" también significa derechos de propiedad similares a los derechos de autor aplicables a otros tipos de obras, como las máscaras de semiconductores.
+
+ "El Programa" se refiere a cualquier programa o trabajo, licenciado bajo esta Licencia. Cada licenciatario se llama "usted".
+
+ "Licenciatario" y "recibir" incluye actividades para las cuales uno actúa a través de un agente, como una organización.
+
+ "Modificar" significa copiar de o adaptar todo o parte del trabajo de una manera que requiera permisos de derechos de autor. El trabajo resultante se llama "versión modificada" del trabajo anterior o un trabajo "basado en" el trabajo anterior.
+
+ "Convey" significa cualquier tipo de distribución que permita a terceros hacer o recibir copias. La mera interacción con el usuario a través de una red informática, sin transferencia de copia, no es "convey".
+
+ La "interfaz estándar del sistema" significa una interfaz que se utiliza por completo, y solo por, un Programa necesario para que el software en particular, normalmente sea incluido como parte del sistema operativo en ese sistema operativo, o para que aplicaciones típicas funcionen con el sistema operativo.
+
+ La "biblioteca de sistema" significa una biblioteca de código fuente que:
+
+  a) forma parte del lenguaje de programación o del entorno de tiempo de ejecución utilizado para implementar una parte importante de la función de uso del trabajo ejecutable; o
+  b) incluye implementaciones de todas las interfaces estándar del sistema para dicho trabajo; o
+  c) se requiere con razón para ejecutar una versión modificada del trabajo que es publicada.
+
+ Una "biblioteca de sistema adecuada" significa cualquier biblioteca de sistema, excepto cualquier cosa que acompañe al trabajo, bien en un volumen tangible o de otro modo, concebida para el trabajo. A un volumen de un medio físico se le considera un "volumen" independiente, aun cuando esté contenido en el mismo medio físico.
+
+ 1. Código fuente.
+
+ La "copia legítima" de los Programas en código fuente que incluye la mayoría de los programas incluidos bajo esta Licencia, se refiere al código fuente que uno puede "modificar". Los resultados se denominan "versiones modificadas". Una versión de código objeto se llama "distribución". Esta licencia se aplica a todo el código fuente que recibió bajo esta Licencia y a cualquier obra derivada.
+
+ Los términos y condiciones de esta Licencia se aplican a todos los Programas o cualquier trabajo derivado de acuerdo con los términos de esta Licencia. Usted no debe transmitir ningún trabajo que esté bajo esta Licencia sin adjuntar el mismo.
+
+ 2. Copiar y modificar.
+
+ Debe adjuntar una copia de esta Licencia a todo Programa que esté bajo esta Licencia, y no debe transmitir ninguna copia del mismo sin asegurar que, a su vez, los destinatarios recibirán el código fuente, libre de cargo. Si transmite versiones modificadas del Programa, debe incluir en ellas las mismas cláusulas.
+
+ Esta Licencia le permite cambiar el código fuente y compartir versiones modificadas del mismo, de acuerdo con las mismas condiciones que se aplican al código original.
+
+ Si comparte versiones modificadas del Programa, debe incluir una declaración clara de que usted ha cambiado los archivos, junto con las fechas de dichos cambios.
+
+ 3. Copias verbatim.
+
+ Usted puede copiar y distribuir copias verbatim del código fuente del Programa, sin modificar, siempre y cuando preserve en ellas el aviso de derechos de autor y la ausencia de garantía.
+
+ 4. Versiones ejecutables.
+
+ Usted puede copiar y distribuir versiones ejecutables del Programa, siempre y cuando cumpla con la Sección 6. Debe incluir una copia completa correspondiente del código fuente legible por máquina de la versión ejecutable, para todo aquel que reciba el ejecutable.
+
+ 5. Modificaciones.
+
+ Usted puede copiar y distribuir versiones modificadas del código fuente del Programa, y el código resultante del mismo, bajo los términos de la Sección 4, siempre que todas las modificaciones estén disponibles en un formato legible por máquina bajo los mismos términos de esta Licencia.
+
+ 6. Distribución de obras.
+
+ Los derechos otorgados a usted bajo esta Licencia se otorgarán sin cobrar regalías por los mismos.
+
+ Si desea recibir regalías, puede agregar una restricción adicional, la cual debe declararse en el momento de transmitir la obra. La imposición de restricciones adicionales no está permitida.
+
+ 7. Licencias adicionales.
+
+ Debe incluir una copia de esta Licencia con todas las copias y versiones modificadas del Programa. También puede incluir una copia de la Licencia Pública General de GNU con cada copia y versión modificada del Programa que distribuya.
+
+ 8. Renuncia de garantías.
+
+ No se ofrece ninguna garantía para el Programa, en la medida permitida por la ley. Excepto cuando se indique lo contrario por escrito, los titulares de derechos de autor y otros proporcionan el Programa "tal como está" sin garantías de ningún tipo, ya sea expresa o implícita, incluidas, pero no limitadas a, las garantías de comercialización y aptitud para un propósito particular.
+
+ 9. Limitación de responsabilidad.
+
+ En ningún caso el titular de derechos de autor o cualquier otra parte que pueda modificar o redistribuir el Programa de acuerdo con esta Licencia será responsable por daños, incluidas las consecuencias directas, incidentales o indirectas, derivadas del uso del Programa.
+
+ 10. Revisiones de la Licencia.
+
+ La Free Software Foundation puede publicar versiones revisadas o nuevas de la Licencia Pública General de GNU de vez en cuando. Dichas nuevas versiones se aplicarán al código fuente del Programa. Puede optar por seguir los términos de la nueva Licencia si así lo prefiere.
+
+ 11. Divisibilidad.
+
+ Si alguna parte de esta Licencia se considera inválida o inaplicable bajo la ley aplicable, el resto de la Licencia continuará aplicándose de acuerdo con sus términos.
+
+ 12. Licencia de patente.
+
+ Como condición para ejercer los derechos otorgados bajo esta Licencia, usted otorga una licencia no exclusiva, mundial y libre de regalías bajo las patentes que posea o controle, a todo el mundo, para hacer, usar, vender y distribuir el código fuente del Programa o cualquier trabajo derivado del mismo, bajo los términos de esta Licencia.
+
+ Esta Licencia no otorga permiso para usar el nombre comercial, la marca registrada, el logotipo o el nombre del autor del Programa, excepto en el contexto de la transmisión del Programa tal como se permite por esta Licencia. Por favor, consulte la Sección 7 para obtener más detalles sobre las licencias adicionales.
+
+                       FIN DE LOS TÉRMINOS Y CONDICIONES
+
+ Cómo aplicar estos términos a sus nuevos programas
+
+ Si desarrolla un nuevo programa, y quiere que sea de la mayor utilidad posible para el público, la mejor manera de lograrlo es hacerlo software libre que todos puedan redistribuir y cambiar bajo estos términos.
+
+ Para ello, adjunte los siguientes avisos al programa. Es más seguro, adjuntarles también, a título orientativo, una nota como la siguiente, para dejar claro que la Garantía no se ofrece.
+
+ 
+ TalentoDJS - Sesiones de música
+ Copyright (C) 2024 - David Sarrión
+
+ Este programa es software libre: puede redistribuirlo y/o modificarlo
+ bajo los términos de la Licencia Pública General de GNU publicada
+ por la Free Software Foundation, ya sea la versión 3 de la
+ Licencia, o (a su opción) cualquier versión posterior.
+
+ Este programa se distribuye con la esperanza de que sea útil,
+ pero SIN NINGUNA GARANTÍA; sin incluso la garantía implícita de
+ COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Véase la
+ Licencia Pública General de GNU para más detalles.
+
+ Debería haber recibido una copia de la Licencia Pública General de GNU
+ junto con este programa. Si no, vea <http://www.gnu.org/licenses/>.
