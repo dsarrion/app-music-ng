@@ -6,6 +6,7 @@
         <h2 class="mb-4 lg:mb-6 italic text-center pb-2 md:text-lg tracking-tight text-gray-400">
             {{video.title}}
         </h2>
+        <p class="text-red-700 text-lg text-center mb-2">{{errorMessage}}</p>
     </div> 
     <div class="w-full border rounded-lg shadow bg-gray-800 border-gray-700">
                     <!--Zona de Video-->
@@ -84,9 +85,9 @@
                     <div> <!-- Formulario para enviar comentario -->
                         <form [formGroup]="form" (ngSubmit)="onSubmit()">
                             <label for="content" class="sr-only">Tu mensaje</label>
-                            <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                <button type="button"
-                                    class="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <div class="relative flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
+                                <button type="button" id="emoji-button" (click)="toggleEmojis()"
+                                    class="p-2 rounded-lg cursor-pointer  text-gray-300 hover:text-gray-200 hover:bg-gray-600">
                                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                         viewBox="0 0 20 20">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -95,6 +96,9 @@
                                     </svg>
                                     <span class="sr-only">Añadir emoji</span>
                                 </button>
+                                @if(showEmojis){
+                                    <emoji-picker id="emoji-picker" class="dark absolute top-16 -left-0.5" (emoji-click)="addEmoji($event)"></emoji-picker>
+                                }                             
                                 <textarea formControlName="content" id="content" rows="1"
                                     class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Escribe un mensaje..."></textarea>
@@ -108,13 +112,13 @@
                                     <span class="sr-only">Enviar mensaje</span>
                                 </button>
                             </div>
-                            @if(submitted && f['content'].errors){
+                            @if(submitted && f['content'].errors && showError){
                                 <small class="flex justify-center p-1 m-1 text-sm rounded-lg bg-gray-800 text-red-600">
                                     @if (f['content'].errors['required']) {
                                         Tu comentario está vacio   
                                     }
                                     @if (f['content'].errors['maxlength']) {
-                                    Los comentarios no pueden sobrepasar los 120 caracteres
+                                        Los comentarios no pueden sobrepasar los 120 caracteres
                                     }
                                     @if (f['content'].errors['minlength']) {
                                         El comentario debe tener al menos de 3 caracteres

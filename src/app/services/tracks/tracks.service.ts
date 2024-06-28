@@ -45,6 +45,25 @@ export class TracksService {
     );
   }
 
+  getAllTracksPaginate(page?:number, perPage?:number): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.get<any>(environment.apiUrlBase+'/tracks/all/paginate?page='+page+'&perPage'+perPage, { headers }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getTracksLikePaginate(page?:number, perPage?:number): Observable<any> {
+    return this.http.get<any>(environment.apiUrlBase+'/tracks/all/like/paginate?page='+page+'&perPage'+perPage).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getUserTracksLikes(userId: number, page?:number, perPage?:number): Observable<any>{
+    const headers = this.getHeaders();
+    return this.http.get<any>(environment.apiUrlBase+'/tracks/likes/user/'+userId+'?page='+page+'&perPage='+perPage, { headers }).pipe(
+      catchError(this.handleError))
+  }
+
   deleteTrack(id:number) {
     const headers = this.getHeaders();
     return this.http.delete(environment.apiUrlBase+'/tracks/'+id, { headers }).pipe(
@@ -96,6 +115,6 @@ export class TracksService {
     } else {
       console.error('Backend devolvió el código de estado ', error);
     }
-    return throwError(() => new Error('Algo falló. Por favor intente nuevamente.'));
+    return throwError(() => new Error('Algo falló. Actualice la página por favor.'));
   }
 }

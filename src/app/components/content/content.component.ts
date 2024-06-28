@@ -3,7 +3,7 @@ import { TracksService } from '../../services/tracks/tracks.service';
 import { RouterLink } from '@angular/router';
 import { NextComponent } from '../icon/next/next.component';
 import { CategoryModel } from '../../Models/categoryModel';
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -20,11 +20,9 @@ export class ContentComponent implements OnInit, OnChanges, OnDestroy {
   errorTracks:string = "";
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private trackService: TracksService) { }
+  constructor(private trackService: TracksService, private viewportScroller: ViewportScroller) {}
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if(this.category.name == "Mas Populares"){
@@ -40,30 +38,15 @@ export class ContentComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  getTrensTracks(){
-    this.subscriptions.add(
-      this.trackService.getAllTracks().subscribe({
-        next: (response) => {
-          const tracks = response;
-          // Ordena los tracks por número de likes en orden descendente
-        const sortedTracks = tracks.sort((a: any, b: any) => b.likes - a.likes);
-        this.videos = sortedTracks.slice(0, 6);
-        }
-      })
-    )
-  }
-
   //Obtener tracks por categoria
   getTracks(category_id:any){
     this.subscriptions.add(
       this.trackService.getTracksByCategory(category_id).subscribe({
-        next: (response) => {
-          // Ordenar los videos por mas recientes primero
-          this.videos = response.data;
-          this.videos = this.videos.slice(0, 6);
+        next: (response: any) => {
+          this.videos = response.data.slice(0, 6);
         },
         error: (errorTracks) => {
-          console.error(errorTracks);
+          console.error('Error al obtener los Tracks por categorias', errorTracks);
           this.errorTracks = errorTracks;
         }, 
         complete: () => {
@@ -72,6 +55,20 @@ export class ContentComponent implements OnInit, OnChanges, OnDestroy {
       })
     )
   }
+
+  //Obtener Mas Populares
+    getTrensTracks(){
+      this.subscriptions.add(
+        this.trackService.getTracksLikePaginate().subscribe({
+          next: (response) => {
+          this.videos = response.data.slice(0, 6);
+          },
+          error: (error) => {
+          console.error('Error al obtener Trendtracks:', error);
+        }
+        })
+      )
+    }
 
   getThumb(url: string, size: string) {
     var video, results, thumburl;
@@ -90,6 +87,10 @@ export class ContentComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     return thumburl;
+  }
+
+  scrollTop(){
+    this.viewportScroller.scrollToPosition([0, 0]);
   }
 
   ngOnDestroy(): void {

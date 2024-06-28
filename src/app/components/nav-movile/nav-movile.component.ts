@@ -21,6 +21,12 @@ export class NavMovileComponent implements OnInit, OnDestroy{
   constructor(private userService: UserService, private trackService: TracksService){}
 
   ngOnInit(): void {
+    this.loginOn();
+
+    this.getCategoriesWithTracks();
+  }
+
+  loginOn(){
     this.subscriptions.add(
       this.userService.currentUserLoginOn.subscribe({
         next: (userLoginOn) => {
@@ -28,8 +34,6 @@ export class NavMovileComponent implements OnInit, OnDestroy{
         }
       })
     )
-
-    this.getCategoriesWithTracks();
   }
 
   getCategoriesWithTracks() {

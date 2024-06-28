@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TracksService } from '../../../../services/tracks/tracks.service';
 import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { PaginationComponent } from '../../../../components/pagination/pagination.component';
 
 @Component({
   selector: 'app-all-videos',
   standalone: true,
-  imports: [RouterLink],
+  imports: [ RouterLink, PaginationComponent ],
   templateUrl: './all-videos.component.html',
   styleUrl: './all-videos.component.css'
 })
@@ -16,17 +17,23 @@ export class AllVideosComponent implements OnInit, OnDestroy {
   errorMessage: string = "";
   private subscriptions: Subscription = new Subscription();
 
+  // Variables de paginación
+  currentPage: number = 1;
+  totalPages: number = 1;
+  videosPerPage: number = 12;
+
   constructor(private trackService: TracksService, private router: Router) { }
 
   ngOnInit(): void {
-    this.allTracks();
+    this.allTracks(this.currentPage);
   }
 
-  allTracks() {
+  allTracks(page: number) {
     this.subscriptions.add(
-      this.trackService.getAllTracks().subscribe({
-        next: (allTracks) => {
-          this.videos = allTracks
+      this.trackService.getAllTracksPaginate(page, this.videosPerPage).subscribe({
+        next: (response) => {
+          this.videos = response.data;
+          this.totalPages = Math.ceil(response.total / this.videosPerPage);
         },
         error: (errorTracks) => {
           console.error(errorTracks);
@@ -37,6 +44,11 @@ export class AllVideosComponent implements OnInit, OnDestroy {
         }
       })
     )
+  } 
+
+  onPageChange(newPage: number) {
+    this.currentPage = newPage;
+    this.allTracks(this.currentPage);
   }
 
   getThumb(url: string, size: string) {

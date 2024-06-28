@@ -7,11 +7,12 @@ import { CommonModule, ViewportScroller } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SpinnerComponent } from '../../components/spinner/spinner.component';
 import { TrendsComponent } from '../../components/trends/trends.component';
+import { PaginationComponent } from '../../components/pagination/pagination.component';
 
 @Component({
   selector: 'app-categoria',
   standalone: true,
-  imports: [CommonModule, RouterLink, SpinnerComponent, TrendsComponent], 
+  imports: [CommonModule, RouterLink, SpinnerComponent, TrendsComponent, PaginationComponent], 
   templateUrl: './categoria.component.html',
   styleUrl: './categoria.component.css'
 })
@@ -26,9 +27,7 @@ export class CategoriaComponent implements OnInit, OnDestroy {
   // Variables de paginación
   currentPage: number = 1;
   totalPages: number = 1;
-  totalVideos: number = 0;
   videosPerPage: number = 8;
-  isLoading: boolean = false;
 
   @Input('id')
   set idCategory(value: string) {
@@ -38,8 +37,7 @@ export class CategoriaComponent implements OnInit, OnDestroy {
     return this.categoryIdSubject.value;
   }
   
-
-  constructor(private trackService: TracksService, private viewportScroller: ViewportScroller) { }
+  constructor(private trackService: TracksService, private viewportScroller: ViewportScroller) {}
 
   ngOnInit(): void {
 
@@ -77,45 +75,50 @@ export class CategoriaComponent implements OnInit, OnDestroy {
   //Recibo los track para mostrar segun la categoria
   tracksCategory(id: number) {
     if(id === 0){
-      this.getTrensTracks(); 
+      this.getTrensTracks(this.currentPage); 
     }else{
       this.loadVideosByCategory(id, this.currentPage);
     }  
   }
 
-  loadVideosByCategory(id: number, page: number) {
-    this.isLoading = true;
+  loadVideosByCategory(id: number, page:number) {
     this.subscriptions.add(
       this.trackService.getTracksByCategory(id, page, this.videosPerPage).subscribe({
         next: (response) => {
           this.videosCategory = response.data;
-          this.currentPage = response.current_page;
-          this.totalPages = response.last_page;
-          this.totalVideos = response.total;
-          this.isLoading = false;
+          this.totalPages = Math.ceil(response.total / this.videosPerPage);
+          this.viewportScroller.scrollToPosition([0, 0]);
         },
         error: (errorTracks) => {
           console.error('error: ', errorTracks);
           this.errorMessage = errorTracks;
-          this.isLoading = false;
         }
       })
     );
   }
 
   //Obtener videos Mas Populares
-  getTrensTracks(){
+  getTrensTracks(page: number){
     this.subscriptions.add(
-      this.trackService.getAllTracks().subscribe({
+      this.trackService.getTracksLikePaginate(page, this.videosPerPage).subscribe({
         next: (response) => {
-          const tracks = response;
           // Ordena los tracks por número de likes en orden descendente
-        const sortedTracks = tracks.sort((a: any, b: any) => b.likes - a.likes);
-        this.videosCategory = sortedTracks
+          this.videosCategory = response.data;
+          this.totalPages = Math.ceil(response.total / this.videosPerPage);
+        },
+        error: (errorTracks) => {
+          console.error('error: ', errorTracks);
+          this.errorMessage = errorTracks;
         }
       })
     )
-  } 
+  }
+
+  onPageChange(newPage: number) {
+    this.currentPage = newPage;
+    this.tracksCategory(Number(this.idCategory));
+    this.viewportScroller.scrollToPosition([0, 0]);
+  }
 
   getThumb(url: string, size: string) {
     if (!url) {
@@ -125,24 +128,6 @@ export class CategoriaComponent implements OnInit, OnDestroy {
     const video = results ? results[1] : url;
 
     return `http://img.youtube.com/vi/${video}/${size}.jpg`;
-  }
-
-  loadNextPage() {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.loadVideosByCategory(Number(this.idCategory), this.currentPage);
-    }
-  }
-
-  loadPreviousPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadVideosByCategory(Number(this.idCategory), this.currentPage);
-    }
-  }
-
-  scrollTop(){
-    this.viewportScroller.scrollToPosition([0, 0]);
   }
 
   ngOnDestroy(): void {

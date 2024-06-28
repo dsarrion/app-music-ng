@@ -49,11 +49,6 @@ export class CommentsService {
       catchError(this.handleError))
   }
 
-  getTracksLikes(userId: number, page?:number, perPage?:number): Observable<any>{
-    const headers = this.getHeaders();
-    return this.http.get<any>(environment.apiUrlBase+'/tracks/likes/user/'+userId+'?page='+page+'&perPage='+perPage, { headers }).pipe(
-      catchError(this.handleError))
-  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

@@ -16,16 +16,16 @@
         }@else {
         <ul class="flex flex-wrap w-full group">
             @for(video of videosCategory; track video){
-            <li class="p-4 w-1/2 md:w-1/3 lg:w-1/4">
+            <li class="p-4 lg:p-2 w-full sm:w-1/2 lg:w-1/4">
                 <div
                     class="max-w-max lg:max-w-xs flex flex-col h-full justify-between duration-300 group-hover:opacity-80 hover:!opacity-100 rounded-lg shadow bg-gray-700/30">
                     <!--Sacar imagen de video-->
                     <a [routerLink]="['/sesion', video.id]" class="w-full">
                         <div class="w-full rounded-t-lg overflow-hidden">
                            @if(video.url){
-                                <img class="-my-4 lg:-my-7" src="{{getThumb(video.url, 'sddefault')}}" alt="" />
+                                <img class="-my-10 sm:-my-7 md:-my-10 lg:-my-7" [src]="getThumb(video.url, 'sddefault')" alt="Video" />
                             }@else {
-                                <img class="opacity-30" src="assets/img/default-video.jpg" alt="" />
+                                <img class="opacity-30" src="assets/img/default-video.jpg" alt="Error" />
                             } 
                         </div>                      
                     </a>
@@ -43,46 +43,14 @@
         </ul>
         }
     </div>
-    <!-- PAGINACION -->
-    @if(totalVideos > 8){
-    <div class="flex flex-col items-center mt-6 mb-8">
-        <!-- Help text -->
-        <span class="text-sm text-gray-700 dark:text-gray-400">
-            Página <span class="font-semibold text-gray-200">{{currentPage}}</span> de <span
-                class="font-semibold text-gray-200">{{totalPages}}</span>
-        </span>
-        <div class="inline-flex mt-2 xs:mt-0">
-            <!-- Buttons -->
-            <button (click)="loadPreviousPage()" [disabled]="isLoading || currentPage === 1" (click)="scrollTop()"
-                [ngClass]="{'flex items-center justify-center px-3 h-8 text-sm md:px-4 md:h-10 md:text-base font-medium rounded-s bg-gray-800 border-gray-700 text-gray-400': true, 
-                            'hover:bg-gray-700 hover:text-white': currentPage!== 1, 'opacity-70': currentPage === 1}">
-                <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M13 5H1m0 0 4 4M1 5l4-4" />
-                </svg>
-                Anterior
-            </button>
-            <button (click)="loadNextPage()" [disabled]="isLoading || currentPage === totalPages" (click)="scrollTop()"
-                [ngClass]="{'flex items-center justify-center px-3 h-8 text-sm md:px-4 md:h-10 md:text-base font-medium border-0 border-s rounded-e bg-gray-800 border-gray-700 text-gray-400': true,
-                            'hover:bg-gray-700 hover:text-white': currentPage !== totalPages,  'opacity-70': currentPage === totalPages}">
-                Siguiente
-                <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M1 5h12m0 0L9 1m4 4L9 9" />
-                </svg>
-            </button>
-        </div>
-    </div>
-    }
-}
+    <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="onPageChange($event)"></app-pagination>
+} 
 
 <div>
-    @if(idCategory !== '0'){
+    @if(idCategory != '0'){
         <div class="max-w-screen-xl mx-auto">
             <hr class="text-center h-px mt-4 mb-4 lg:mt-4 mx-4 md:mx-6 2xl:-mx-2  border-gray-600/90">
         </div>
-    <app-trends></app-trends>
+        <app-trends></app-trends>
     }
 </div>

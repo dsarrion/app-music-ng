@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit {
       {
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]]
-      })
+      }
+    )
   }
 
   get f(): { [key: string]: AbstractControl } {

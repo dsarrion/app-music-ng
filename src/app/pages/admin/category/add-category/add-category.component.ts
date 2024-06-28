@@ -4,6 +4,7 @@ import { TracksService } from '../../../../services/tracks/tracks.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { UserService } from '../../../../services/user/user.service';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
   constructor(
     private trackService: TracksService, 
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private userService: UserService
   ){}
 
   ngOnInit(): void {

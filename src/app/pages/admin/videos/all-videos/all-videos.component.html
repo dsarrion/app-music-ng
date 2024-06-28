@@ -1,3 +1,8 @@
+<div class="flex flex-col items-center justify-center px-6 mx-auto mt-8 cursor-default">
+    <span class="flex text-gray-300 text-2xl md:text-3xl">(Admin)</span>
+    <p class="text-gray-400 italic text-pretty mx-6 mt-2 text-sm md:text-base">-Se muestran todos los videos de la Web-
+    </p>
+</div>
 <div class="max-w-screen-xl mx-auto p-4">
     <ul class="flex flex-wrap">
         @for(video of videos; track video){
@@ -44,3 +49,4 @@
         }
     </ul>
 </div>
+<app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="onPageChange($event)"></app-pagination>

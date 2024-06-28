@@ -75,9 +75,9 @@ export class UserService {
   }
 
   logout() {
-    localStorage.removeItem('token_user');
     this.currentUserLoginOn.next(false);
     this.currentUserData.next(null);
+    localStorage.removeItem('token_user');
   }
 
   getUserData(): Observable<User> {

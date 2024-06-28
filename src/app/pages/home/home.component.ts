@@ -28,11 +28,10 @@ export class HomeComponent implements OnInit, OnDestroy{
     this.subscriptions.add(
       this.trackService.getCategories().subscribe({
         next: (categories) => {
-          //console.log("categories:",categories);
+          //console.log("categorias:",categories);
           this.trackService.getAllTracks().subscribe({
-            next: (tracks) => {
-              //console.log("tracks:", tracks);
-              const idsCategories = new Set(tracks.map((track: any) => track.category_id)); // Sacar los ids de las categorias
+            next: (response) => {
+              const idsCategories = new Set(response.map((track: any) => track.category_id)); // Sacar los ids de las categorias
               this.categories = categories.filter((category: any) => idsCategories.has(category.id)); // Filtrar las categorías con tracks
             },
             error: (errorData) => {

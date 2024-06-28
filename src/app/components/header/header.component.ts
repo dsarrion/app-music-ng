@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
 
     if(this.userData?.role === "ADMIN_1"){
       this.admin = true;
-    }
+    } 
   }
 
   getCategoriesWithTracks() {
