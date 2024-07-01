@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "talentodjs": {
+    "app-music-ng": {
       "projectType": "application",
       "schematics": {},
       "root": "",
