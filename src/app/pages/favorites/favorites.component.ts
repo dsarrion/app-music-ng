@@ -22,7 +22,7 @@ export class FavoritesComponent implements OnInit, OnDestroy{
   userId?: number;
   errorMessage: string = "";
   videosLikes?: Track[];
-  countVideos?: number;
+  countVideos: number = 0;
   private subscriptions: Subscription = new Subscription();
 
   // Variables de paginación
@@ -69,6 +69,9 @@ export class FavoritesComponent implements OnInit, OnDestroy{
       this.tracksService.getUserTracksLikes(id, page, this.videosPerPage).subscribe({
         next:(response) => {
           this.videosLikes = response.tracks.data;
+          if(this.videosLikes){
+            this.countVideos = this.videosLikes.length;
+          } 
           this.totalPages = Math.ceil(response.tracks.total / this.videosPerPage);
           this.viewportScroller.scrollToPosition([0, 0]);
         }, error: (errorData) => {

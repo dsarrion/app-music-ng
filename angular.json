@@ -36,6 +36,21 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.development.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "assets": [
+                "src/favicon.ico",
+                "src/assets",
+                {
+                  "glob": "**/*",
+                  "input": "node_modules/@fontsource-variable/onest/files/",
+                  "output": "/assets/"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",

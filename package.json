@@ -1,5 +1,5 @@
 {
-  "name": "app-music-ng",
+  "name": "talentodjs",
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:app-music-ng": "node dist/app-music-ng/server/server.mjs"
+    "serve:ssr:talentodjs": "node dist/talentodjs/server/server.mjs"
   },
   "private": true,
   "dependencies": {
@@ -39,6 +39,7 @@
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
     "autoprefixer": "^10.4.18",
+    "file-loader": "^6.2.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
