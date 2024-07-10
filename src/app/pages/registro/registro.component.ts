@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user/user.service';
 import { User } from '../../Models/userModel';
 import { Subscription } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { AvatarComponent } from '../../components/avatar/avatar.component';
 
 @Component({

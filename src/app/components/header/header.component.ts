@@ -5,7 +5,7 @@ import { User } from '../../Models/userModel';
 import { Router } from '@angular/router';
 import { TracksService } from '../../services/tracks/tracks.service';
 import { Subscription } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { AvatarComponent } from '../avatar/avatar.component';
 
 @Component({
