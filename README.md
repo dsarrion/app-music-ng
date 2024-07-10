@@ -1,4 +1,4 @@
-# Proyecto Angular: Sesiones de Música
+# Proyecto Angular: TalentoDJs
 
 ## Descripción
 
@@ -16,11 +16,11 @@ Esta aplicación web permite a los usuarios escuchar sesiones de música organiz
 - **Angular:** Framework principal para construir la aplicación.
 - **TypeScript:** Lenguaje de programación utilizado con Angular.
 - **Tailwind CSS:** Framework de CSS para estilizar la interfaz de usuario.
-- **Laravel:** Framework de PHP utilizado para construir la API backend.
+- **Laravel:** Framework de PHP utilizado para construir la API del backend.
 - **MySQL:** Sistema de gestión de bases de datos utilizado para almacenar datos.
 
 ## Licencia
 Este proyecto está licenciado bajo la Licencia Pública General de GNU (GPL). Ver el archivo LICENSE para más detalles.
 
 ## Contacto
-Para cualquier pregunta o comentario, por favor contacta a samidas86@gamil.com.
+Para cualquier pregunta o comentario, por favor contacta a samidas86@gmail.com.
