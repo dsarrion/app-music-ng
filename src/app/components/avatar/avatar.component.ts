@@ -43,11 +43,11 @@ export class AvatarComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  async getImageName(){
+  getImageName(){
     this.subcriptions.add(
-      await this.userService.currentUserData.subscribe({
+      this.userService.currentUserData.subscribe({
         next: (data) => {
-          this.ImageName = data?.avatar;    
+          this.ImageName = data?.avatar;  
           if(this.ImageName){
             this.getAvatar(this.ImageName);
           }
@@ -59,9 +59,9 @@ export class AvatarComponent implements OnInit, OnChanges, OnDestroy {
     )
   }
 
-  async getAvatar(name: string | undefined){
+  getAvatar(name: string | undefined){
     this.subcriptions.add(
-      await this.userService.getAvatar(name).subscribe({
+      this.userService.getAvatar(name).subscribe({
         next: (data: any) => {
           const reader = new FileReader();
           reader.onloadend = () => {

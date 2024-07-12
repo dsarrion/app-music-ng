@@ -219,8 +219,19 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
+    const ImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg']
+
     if (file) {
+      if(!ImageTypes.includes(file.type)) {
+        this.updateMessage2 = "Imagen incorrecta, selecciona una imagen válida.";
+        setTimeout (() => {
+          this.updateMessage2 = "";
+        },4000);
+        this.avatarChange = false;
+        return;
+      }
       this.avatarChange = true;
+      this.updateMessage2 = '';
       this.uploadAvatar(file);
       
     }else{
@@ -239,7 +250,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
         },
         error: (errorData) => {
           console.error("Error al subir la imagen", errorData);
-          this.errorMessage = errorData
+          this.updateMessage2 = "Error al subir la imagen. Por favor, inténtalo de nuevo.";
         }
       })
     )
