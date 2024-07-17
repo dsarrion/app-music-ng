@@ -18,25 +18,31 @@
         </div>
         }
                     <!-- Zona de Opciones -->
-        <section class="p-2 flex w-full">
+        <section class="p-1 flex w-full">
             <div class="flex-auto sm:ml-2 lg:ml-4 mt-1.5">
                 <div class="flex items-center group">
                     @if(!haslike){
-                        <div (click)="addFavorite()" class="flex items-center my-2 p-1 cursor-pointer">
-                            <app-unlike></app-unlike>
-                            <p class="text-gray-300 group-hover:text-white text-[11px] sm:text-xs ml-0.5 lg:ml-1 sm:pt-0 mt-0.5">Añadir a Mis
-                                Favoritos</p>
-                        </div>
+                        @if(userLoginOn){
+                            <div (click)="addFavorite()" class="flex items-center my-2 p-1 cursor-pointer">
+                                <app-unlike></app-unlike>
+                                <p class="text-gray-300 group-hover:text-white text-[11px] sm:text-xs ml-0.5 lg:ml-1 sm:pt-0">Añadir a Favoritos</p>
+                            </div>
+                        }@else {
+                            <div (click)="toggleModal()" class="flex items-center my-2 p-1 cursor-pointer">
+                                <app-unlike></app-unlike>
+                                <p class="text-gray-300 group-hover:text-white text-[11px] sm:text-xs ml-0.5 lg:ml-1 sm:pt-0">Añadir a Favoritos</p>
+                            </div>
+                        }                
                     }@else {
-                        <div class="flex items-center my-1.5 py-1 px-0.5">
+                        <div class="flex items-center my-1.5 py-1">
                             <app-like title="Eliminar favorito" (click)="deleteFavorite()"></app-like>
-                            <p class="text-gray-100 text-[11px] sm:text-xs mt-1 sm:pt-0 lg:ml-0.5 cursor-default">
-                            Agregado a 'Mis Favoritos'</p>
+                            <p class="text-gray-100 text-[11px] sm:text-xs mt-0.5 sm:pt-0 lg:ml-0.5 cursor-default">
+                            Añadido a 'Favoritos'</p>
                         </div>
                     }           
                 </div>
             </div>
-            <div class="flex-2">
+            <div class="flex-2 ml-2">
                 <div (click)="toggleComments()" class="flex items-center my-3.5 cursor-pointer group hover:border-y hover:border-gray-400 py-1">
                     <app-icon-comments></app-icon-comments>
                     @if(countComments != 0){
@@ -46,7 +52,8 @@
                 </div>
             </div>
             <div class="flex-2 md:mr-2 lg:mr-8">
-                <a href="whatsapp://send?text=web%20de%20sesiones20%https://www.talentodjs.com" class="flex items-center my-3.5 ml-2 lg:ml-4 cursor-pointer group hover:border-y hover:border-gray-400 p-1">
+                <a href="whatsapp://send?text=La%20Mejor%20Música%20https://talentodjs.com"
+                    class="flex items-center my-3.5 ml-1 lg:ml-4 cursor-pointer group hover:border-y hover:border-gray-400 p-1">
                     <app-share></app-share>
                     <p class="text-gray-300 group-hover:text-white text-xs md:text-sm mt-0.5 ml-0.5">Compartir</p>        
                 </a>
@@ -55,7 +62,7 @@
 
                                         <!-- Zona de Comentarios -->
         @if(showComments){
-            <section class="flex flex-col w-full">
+            <section class="flex flex-col w-full cursor-default">
                 <div class="mx-4">
                     <h2 class="text-gray-200 lg:text-lg ml-1 lg:ml-2">Comentarios</h2>
                     <hr class="h-px mt-1 mb-2 border-0 bg-gray-700">
@@ -79,7 +86,7 @@
                         } 
                     </ul>  
                 } @else {
-                    <p class="flex justify-center p-1 m-1 text-xs text-gray-400 lg:text-sm mb-4 rounded-lg">Aun no hay comentarios disponibles, cuentanos que te parece esta sesion...</p>
+                    <p class="flex justify-center p-1 m-1 text-xs text-gray-400 lg:text-sm mb-4 rounded-lg">Aun no hay comentarios disponibles...</p>
                 }
                 @if(userLoginOn){       <!-- Si esta registrado -->
                     <div> <!-- Formulario para enviar comentario -->
@@ -127,9 +134,8 @@
                             }
                         </form>
                     </div>
-                }@else{          <!-- Si no esta registrado -->
-                    <a routerLink="/login" title="Inicia sesión">                        
-                        <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700" title="Inicia sesión">
+                }@else{          <!-- Si no esta registrado -->                       
+                        <div class="flex items-center px-3 py-2 rounded-lg bg-gray-700" title="Inicia sesión">
                             <div type="button"
                                 class="p-2 rounded-lg text-gray-400">
                                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -141,8 +147,8 @@
                                 <span class="sr-only">Añadir emoji</span>
                             </div>
                             <textarea id="content" rows="1" disabled
-                                class="flex items-center mx-4 p-2.5 w-full text-sm rounded-lg bg-gray-800 placeholder-gray-400 text-white"
-                                placeholder="Inicia sesion para enviar tus comentarios..."></textarea>
+                                class="flex items-center mx-4 p-2.5 w-full text-sm rounded-lg border-gray-600 bg-gray-800 placeholder-gray-500 text-white"
+                                placeholder="Inicia sesion..."></textarea>
                             <div
                                 class="inline-flex justify-center p-2 rounded-full text-gray-500">
                                 <svg class="w-5 h-5 rotate-90 rtl:-rotate-90" aria-hidden="true"
@@ -152,8 +158,7 @@
                                 </svg>
                                 <span class="sr-only">Enviar mensaje</span>
                             </div>
-                        </div>          
-                    </a>                    
+                        </div>                           
                 }                           
             </section>
         }
@@ -165,4 +170,38 @@
 }
 @if(categoryTrends){
 <app-content [category]="categoryTrends"></app-content>
+}
+
+        //VENTANA EMERGENTE INICIAR SESION
+@if(showModal){
+<div id="popup-modal" tabindex="-1"
+  class="overflow-y-auto overflow-x-hidden fixed inset-0 z-40 flex justify-center items-center w-full bg-black/60 md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <div class="relative rounded-lg shadow bg-gray-700/90">
+      <button type="button" (click)="toggleModal()"
+        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+        data-modal-hide="popup-modal">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+        </svg>
+        <span class="sr-only">Cerrar ventana</span>
+      </button>
+      <div class="p-4 md:p-5 text-center">
+        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Inicia sesion para guardar en 'Favoritos'</h3>
+        <a routerLink="/login" class="text-white bg-gray-500 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+            Login
+        </a>
+        <a routerLink="/registro" class="py-2.5 px-4 ms-1.5 text-sm font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-4 focus:ring-gray-700 bg-blue-600 text-gray-100 border-gray-600 hover:text-white hover:bg-blue-500">
+            Registro
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 }

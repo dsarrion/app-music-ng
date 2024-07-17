@@ -1,10 +1,9 @@
 <!--Navigation Movile-->
-<div
-    class="fixed block md:hidden bottom-0 left-0 z-50 w-full h-16 border-t  bg-gradient-to-b from-gray-800/70 to-black/95 border-gray-700/95">
-    <div class="grid h-full max-w-lg text-gray-400 grid-cols-4 pb-2 mx-auto font-medium">
+<div class="md:hidden fixed bottom-0 left-0 right-0 z-50 w-full h-16 border-t bg-gradient-to-b from-gray-800/70 to-black/95 border-gray-700/95">
+    <div class="grid h-full text-gray-400 grid-cols-4 pb-2 mx-auto font-medium">
         <button type="button" routerLink="/inicio" routerLinkActive="bg-gray-900/80 text-gray-300"
             class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-900/80 group">
-            <svg class="w-5 h-5 mb-2 mt-1.5 group-hover:text-gray-300 group-focus:text-gray-300" aria-hidden="true"
+            <svg class="w-5 h-5 mb-1 mt-1.5 group-hover:text-gray-300 group-focus:text-gray-300" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path
                     d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
@@ -15,7 +14,7 @@
         <button type="button" id="categories-menu-button" (click)="toggleCategories()"
             class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-900/80 focus:bg-gray-900/80 group">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                stroke="currentColor" class="size-8 text-gray-400 group-hover:text-gray-300 group-focus:text-gray-300">
+                stroke="currentColor" class="size-8 text-gray-400 -mb-1 group-hover:text-gray-300 group-focus:text-gray-300">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
             <span class="text-sm text-gray-400 group-hover:text-gray-300 group-focus:text-gray-300">Categorias
@@ -24,7 +23,7 @@
         <button type="button" routerLink="/favoritos" routerLinkActive="bg-gray-900/80 text-gray-300"
             class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-900/80 group">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                class="size-7 mb-1 group-hover:text-gray-300">
+                class="size-7 group-hover:text-gray-300">
                 <path fill-rule="evenodd"
                     d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
                     clip-rule="evenodd" />
@@ -34,16 +33,16 @@
             </span>
         </button>
         @if(userLoginOn){
-        <button type="button" routerLink="/perfil" routerLinkActive="bg-gray-900/80 grayscale-0 text-gray-300"
-            class="inline-flex flex-col items-center justify-center px-5 grayscale hover:grayscale-0 hover:bg-gray-900/80 group">
-            <app-avatar [size]=28 class="mb-1"></app-avatar>
-            <span class="text-sm group-hover:text-gray-300 group-focus:text-gray-300">Perfil
+        <button type="button" routerLink="/perfil" routerLinkActive="bg-gray-900/80 text-gray-300"
+            class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-900/80 group">
+            <app-avatar [size]=28 class="mt-1 opacity-90"></app-avatar>
+            <span class="text-sm brightness-125 group-hover:text-gray-300 group-focus:text-gray-300">Perfil
             </span>
         </button>
         }@else {
         <button type="button" routerLink="/login" routerLinkActive="bg-gray-900/80 text-gray-300"
             class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-900/80 group">
-            <svg class="w-5 h-5 mb-2 text-gray-400 group-hover:text-gray-300 group-focus:text-gray-300" aria-hidden="true"
+            <svg class="w-6 h-6 mt-1 text-gray-400 group-hover:text-gray-300 group-focus:text-gray-300" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path
                     d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
@@ -57,12 +56,12 @@
 <!-- Menu de Categorias -->
 @if(showCategories){
     <div id="categories-menu" #categoriesMenu
-        class="fixed md:hidden bottom-16 w-full z-50 bg-gradient-to-t from-gray-800/80 to-black/95 border-gray-600/95">
-        <ul class="p-2 text-gray-300">
+        class="fixed md:hidden bottom-16 w-full z-40 bg-gradient-to-t from-gray-800/80 to-black/95 border-gray-600/95">
+        <ul class="p-2 text-gray-300 gap-y-2">
             @for(category of categories; track category){
             <li>
                 <a [routerLink]="['/categoria', category.id]" (click)="toggleCategories()" routerLinkActive="bg-gray-900 text-white hover:scale-100" 
-                    class="relative block py-1 h-8 hover:bg-gray-900/80 hover:text-white transition-transform duration-300 hover:scale-105">
+                    class="relative block py-1 my-1 h-8 hover:bg-gray-900/80 hover:text-white transition-transform duration-300 hover:scale-105">
                     <span class="absolute left-8">{{ category.name }}</span>
                 </a>
             </li>
@@ -70,4 +69,3 @@
         </ul>
     </div>
 }
-    

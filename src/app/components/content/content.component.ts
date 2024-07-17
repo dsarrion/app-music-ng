@@ -17,6 +17,7 @@ export class ContentComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() category!:CategoryModel;
   videos?: any;
+  populares: boolean = false;
   errorTracks:string = "";
   private subscriptions: Subscription = new Subscription();
 
@@ -61,6 +62,7 @@ export class ContentComponent implements OnInit, OnChanges, OnDestroy {
       this.subscriptions.add(
         this.trackService.getTracksLikePaginate().subscribe({
           next: (response) => {
+            this.populares = true;
           this.videos = response.data.slice(0, 6);
           },
           error: (error) => {

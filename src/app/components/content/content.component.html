@@ -1,15 +1,25 @@
 <section class="max-w-screen-xl mx-auto p-1 md:p-4 my-4">
   @if(category){
   <a [routerLink]="['/categoria', category.id]" (click)="scrollTop()">
-    <h2
+    @if(!populares){
+      <h2
       class="mx-2 mt-4 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border border-purple-400 text-indigo-400 shadow-[0_0_1px_#fff,inset_0_0_1px_#fff,0_0_5px_#08f,0_0_7px_#08f,0_0_15px_#08f]">
       <span class="inline-block italic transition-transform duration-300 hover:scale-110">
         {{category.name.toUpperCase()}}
       </span>
     </h2>
+    }@else{
+      <h2
+      class="mx-2 mt-4 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border border-purple-400 text-indigo-300 shadow-[0_0_1px_#fff,inset_0_0_1px_#fff,0_0_5px_#08f,0_0_7px_#08f,0_0_15px_#303bcb]">
+      <span class="inline-block italic transition-transform duration-300 hover:scale-110">
+        🔥 {{category.name.toUpperCase()}} 🔥​
+      </span>
+    </h2>
+    }
+    
   </a>
   }
-  <div class="overflow-x-auto snap-x">
+  <div class="overflow-x-scroll">
     <ul class="w-max flex flex-nowrap group">
       @for(video of videos; track video){
       <li class= "w-full py-3 lg:py-4 px-2 lg:px-3">
@@ -48,7 +58,6 @@
         </a>
       </li>
       }
-
     </ul>
   </div>
 </section>

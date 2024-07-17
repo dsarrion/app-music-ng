@@ -42,6 +42,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
   avatarUserComment: string | null = null;
   showComments: boolean = false;
   showEmojis: boolean = false;
+  showModal:boolean = false;
   showError: boolean = false;
   countComments: number = 0;
   haslike: boolean = false;
@@ -356,6 +357,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
       const messageInput = this.form.get('content') as FormControl;
       messageInput.patchValue(messageInput.value + emoji);
     }
+  }
+
+  toggleModal() {
+    this.showModal = !this.showModal;
   }
 
   private onResize = (): void => {

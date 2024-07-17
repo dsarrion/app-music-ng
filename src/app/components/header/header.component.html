@@ -23,7 +23,7 @@
           </button>
           <!-- Desplegable Categorias -->
           <div [class.hidden]="!isDropdownCategoryOpen" id="cat-drop-down" 
-              class="absolute md:-right-7 w-full z-50 mt-1 border border-gray-700 bg-gray-700/95 font-normal divide-gray-100 rounded-lg shadow md:w-44 ">
+              class="absolute md:-right-7 w-full z-30 mt-1 border border-gray-700 bg-gray-700/95 font-normal divide-gray-100 rounded-lg shadow md:w-44 ">
             <ul class="m-2 text-sm text-gray-200">
               @for(category of categories; track category.id){
               <li>
@@ -71,10 +71,12 @@
       <!--Login Registro-->
       @if(!userLoginOn){
       <div class="hidden md:flex items-center space-x-1 md:space-x-2 md:mr-2 lg:mr-3 rtl:space-x-reverse">
-        <a routerLink="login"
-          class="text-white focus:ring-2 font font-medium rounded-lg text-xs lg:text-sm px-2 py-1 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 bg-gray-600/50 hover:bg-gray-700 focus:outline-none">Login</a>
-        <a routerLink="registro"
-          class="text-white focus:ring-2 font font-medium rounded-lg text-xs lg:text-sm px-2 py-1 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 bg-blue-700 hover:bg-blue-600 focus:outline-none">Registro</a>
+        <a routerLink="login" class="text-white focus:ring-2 font font-medium rounded-lg text-xs lg:text-sm px-2 py-1 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 bg-gray-600/50 hover:bg-gray-700 focus:outline-none">
+          Login
+        </a>
+        <a routerLink="registro" class="text-white focus:ring-2 font font-medium rounded-lg text-xs lg:text-sm px-2 py-1 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 bg-blue-700 hover:bg-blue-600 focus:outline-none">
+          Registro
+        </a>
       </div>
       }
 
@@ -93,7 +95,7 @@
           </button>
           <!-- Desplegable Usuario Menu -->
           <div [class.hidden]="!isDropdownOpen"
-            class="absolute -right-0 z-50 mt-1 w-32 origin-top-right text-gray-200 text-base divide-y rounded-lg shadow bg-gray-700 sm:bg-gray-700/95 divide-gray-600"
+            class="absolute -right-0 z-30 mt-1 w-32 origin-top-right text-gray-200 text-base divide-y rounded-lg shadow bg-gray-700 sm:bg-gray-700/95 divide-gray-600"
             id="user-dropdown">
             <div class="px-4 py-3 cursor-default">
               <span class="block text-sm text-gray-900 dark:text-white">{{userData.name+' '+userData.surname}}</span>
