@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user/user.service';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '../../Models/userModel';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +13,14 @@ import { User } from '../../Models/userModel';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   loginError: string = "";
   userData?: User;
   submitted = false;
   loginOn?: boolean;
   form: FormGroup = new FormGroup({});
+  private subscriptions: Subscription = new Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,36 +45,43 @@ export class LoginComponent implements OnInit {
   }
 
   userLoginOn(){
-    this.userService.currentUserLoginOn.subscribe({
-      next: (value: boolean) => {
-        this.loginOn = value;
-        if(this.loginOn){
-          this.router.navigate(['/inicio']);
+    this.subscriptions.add(
+      this.userService.currentUserLoginOn.subscribe({
+        next: (value: boolean) => {
+          this.loginOn = value;
+          if(this.loginOn){
+            this.router.navigate(['/inicio']);
+          }
         }
-      }
-    })
+      })
+    )
   }
 
   async onSubmit(form: void) {
     this.submitted = true;
 
     if (this.form.valid) {
-      this.userService.login(this.form.value).subscribe({
-        next: (userData) => { 
-          console.log(userData.message)
-        },
-        error: (errorData) => {
-          console.error(errorData);
-          this.loginError = errorData;
-        },
-        complete: () => {
-          this.router.navigate(['/inicio']);
-          this.form.reset();
-        }
-      });
+      this.subscriptions.add(
+        this.userService.login(this.form.value).subscribe({
+          next: (userData) => { 
+            console.log(userData.message)
+          },
+          error: (errorData) => {
+            console.error(errorData);
+            this.loginError = errorData;
+          },
+          complete: () => {
+            this.router.navigate(['/inicio']);
+            this.form.reset();
+          }
+        })
+      ) 
     } else {
       return;
     }
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 }

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { UserService } from '../../services/user/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-perfil-option',
@@ -9,8 +10,9 @@ import { UserService } from '../../services/user/user.service';
   templateUrl: './perfil-option.component.html',
   styleUrl: './perfil-option.component.css'
 })
-export class PerfilOptionComponent {
+export class PerfilOptionComponent implements OnDestroy {
   showModal = false;
+  private subscriptions: Subscription = new Subscription();
 
   constructor(private userService: UserService, private router: Router){}
 
@@ -23,10 +25,21 @@ export class PerfilOptionComponent {
     this.showModal = false; // Ocultar modal después de cerrar sesión
   }
 
-  logout(){
-    this.userService.logout();
-    this.router.navigate(['/inicio']);
-    console.log("Usuario LOGOUT correcto");
+  logout() {
+    this.subscriptions.add(
+      this.userService.logout().subscribe({
+        next:(data) => {
+          this.router.navigate(['/inicio']);
+          console.log("Usuario LOGOUT correcto");
+        },
+        error: (err) => {
+          console.error("Error al realizar logout", err);
+        }
+      })
+    )   
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 }

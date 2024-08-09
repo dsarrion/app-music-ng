@@ -220,16 +220,45 @@ export class RegistroComponent implements OnInit, OnDestroy {
   onFileSelected(event: any) {
     const file = event.target.files[0];
     const ImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg']
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 
     if (file) {
+
       if(!ImageTypes.includes(file.type)) {
         this.updateMessage2 = "Imagen incorrecta, selecciona una imagen válida.";
-        setTimeout (() => {
-          this.updateMessage2 = "";
-        },4000);
         this.avatarChange = false;
         return;
       }
+
+      if (file.size > MAX_FILE_SIZE) {
+        this.updateMessage2 = "La imagen es demasiado grande. Tamaño maximo: 5 MB.";
+        this.avatarChange = false;
+        return;
+      }
+
+      // Mostrar vista previa
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        // Obtén el contenedor de la vista previa
+        const previewContainer = document.getElementById('preview');
+
+        // Elimina cualquier imagen previa si existe
+        while (previewContainer?.firstChild) {
+            previewContainer.removeChild(previewContainer.firstChild);
+        }
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.style.width = '100px';
+          img.style.height = '100px';
+          img.style.objectFit = 'cover';
+          img.style.borderRadius = '9999px';
+          img.style.marginLeft = '20px';
+          img.style.marginTop = '6px';
+          // Agrega la nueva imagen al contenedor
+          previewContainer?.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+
       this.avatarChange = true;
       this.updateMessage2 = '';
       this.uploadAvatar(file);
@@ -247,10 +276,14 @@ export class RegistroComponent implements OnInit, OnDestroy {
       this.userService.uploadAvatar(formData).subscribe({
         next: (data) => {            
           this.form.value['avatar'] = data.image;
+          console.log("Imagen subida correctamente");
         },
         error: (errorData) => {
           console.error("Error al subir la imagen", errorData);
           this.updateMessage2 = "Error al subir la imagen. Por favor, inténtalo de nuevo.";
+          if (errorData.error && errorData.error.message) {
+            this.updateMessage2 += ` Detalles: ${errorData.error.message}`;
+          }
         }
       })
     )

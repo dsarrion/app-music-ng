@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && copyfiles -a src/.htaccess dist/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:talentodjs": "node dist/talentodjs/server/server.mjs"
@@ -39,6 +39,7 @@
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
     "autoprefixer": "^10.4.18",
+    "copyfiles": "^2.4.1",
     "file-loader": "^6.2.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",

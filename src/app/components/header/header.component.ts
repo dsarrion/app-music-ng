@@ -83,11 +83,20 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
     )
   }
 
-  logout(){
-    this.userService.logout();
-    this.router.navigate(['/inicio']);
-    this.admin = false;
-    console.log("Usuario LOGOUT correcto");
+  logout() {
+    this.subscriptions.add(
+      this.userService.logout().subscribe({
+        next:(data) => {
+          this.router.navigate(['/inicio']);
+          this.admin = false;
+          console.log("Usuario LOGOUT correcto");
+        },
+        error: (err) => {
+          this.errorMessage = err;
+          console.error("Error al realizar logout", err);
+        }
+      }) 
+    )   
   }
 
   expandCollapse() {

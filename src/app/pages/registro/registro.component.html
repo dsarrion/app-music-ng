@@ -30,7 +30,7 @@
                     Edita tus datos
                 </h2>
                 }
-                <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="space-y-4 md:space-y-6">
                     <div>
                         <label for="name"
                             class="block mb-1 mt-5 text-sm md:text-base font-medium text-gray-900 dark:text-white">Nombre</label>
@@ -165,23 +165,26 @@
                         }
                     </div>
                     }@else {
-                    <div> <!-- AVATAR -->
-                        <div class="flex items-center">
-                            <label for="avatar"
-                                class="block text-sm md:text-base font-medium text-gray-900 dark:text-white">Avatar</label>
+                    <div> <!-- AVATAR -->                       
+                        <label for="avatar"
+                            class="flex items-center text-sm md:text-base font-medium text-gray-900 dark:text-white">
+                            Avatar
                             @if(!userData?.avatar){
-                            <img class="w-8 h-8 ml-2 mb-2 opacity-50 rounded-full"
+                                <img class="w-8 h-8 ml-2 mb-2 opacity-50 rounded-full"
                                 src="assets/img/picture-profile-icon.jpg" alt="user photo">
                             }@else {
-                            <div class="mb-3 ml-4">
-                                <app-avatar [ImageName]="userData?.avatar" [size]=60
+                                <div class="mb-3 ml-4">
+                                    <app-avatar [ImageName]="userData?.avatar" [size]=60
                                     [userName]="userData?.name"></app-avatar>
-                            </div>
+                                </div>
                             }
-                        </div>
-                        <input type="file" formControlName="avatar" id="avatar" (change)="onFileSelected($event)"
-                            [ngClass]="{ 'is-invalid': submitted && f['avatar'].errors }"
+                        </label>                                              
+                        <input type="file" accept="image/*" formControlName="avatar" id="avatar" (change)="onFileSelected($event)"
+                            [ngClass]="{'is-invalid': submitted && f['avatar'].errors }"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            @if(!updateMessage){
+                                <div id="preview"></div>
+                            }
                         @if(f['avatar'].errors){
                         <small class="text-red-700">
                             @if (f['avatar'].errors['maxlength']) {
@@ -224,10 +227,17 @@
                             sesión aquí</a>
                     </p>
                     }@else {
-                    <button type="submit"
-                        class="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">
-                        Actualizar datos</button>
+                        @if(updateMessage2 === ""){
+                            <button type="submit" class="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">
+                            Actualizar datos
+                            </button>
+                        } @else {
+                            <button type="submit" disabled class="w-full text-gray-200 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-400">
+                                Actualizar datos
+                            </button>
+                        }
                     }
+                    
                     @if(registerTrue){
                         <div class="flex flex-col justify-center p-2 rounded-lg border border-green-600">
                             <p class="text-center text-green-600">{{registerMessage}}</p>

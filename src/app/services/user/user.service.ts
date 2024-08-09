@@ -20,7 +20,6 @@ export class UserService {
 
   getHeaders(): HttpHeaders{
     return new HttpHeaders({
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('token_user')}`
     });
   }
@@ -74,10 +73,17 @@ export class UserService {
       )
   }
 
-  logout() {
-    this.currentUserLoginOn.next(false);
-    this.currentUserData.next(null);
-    localStorage.removeItem('token_user');
+  logout(): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.get<any>(`${environment.apiUrlBase}/logout`, { headers }).pipe(
+      tap(() => {
+        // Acciones a realizar después de la llamada a la API
+        this.currentUserLoginOn.next(false);
+        this.currentUserData.next(null);
+        localStorage.removeItem('token_user');
+      }),
+      catchError(this.handleError)
+    );
   }
 
   getUserData(): Observable<User> {
@@ -88,7 +94,8 @@ export class UserService {
   }
 
   uploadAvatar(formData: FormData): Observable<any>{
-    return this.http.post<any>(environment.apiUrlBase+"/user/upload/avatar", formData).pipe(
+    const headers = this.getHeaders();
+    return this.http.post<any>(environment.apiUrlBase+"/user/upload/avatar", formData, { headers }).pipe(
       catchError(this.handleError)
     )
   }

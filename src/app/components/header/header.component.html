@@ -28,7 +28,7 @@
               @for(category of categories; track category.id){
               <li>
                 <a [routerLink]="['/categoria', category.id]" routerLinkActive="text-blue-500/90 hover:text-blue-500/90 hover:bg-transparent"
-                  class="block px-2 py-1.5 hover:rounded hover:bg-gray-500 hover:text-white">
+                  class="block px-2 py-1 hover:rounded hover:bg-gray-500 hover:text-white">
                   {{category.name}}
                 </a>
               </li>

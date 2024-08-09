@@ -127,7 +127,7 @@ export class CategoriaComponent implements OnInit, OnDestroy {
     const results = url.match('[\\?&]v=([^&#]*)');
     const video = results ? results[1] : url;
 
-    return `http://img.youtube.com/vi/${video}/${size}.jpg`;
+    return `https://img.youtube.com/vi/${video}/${size}.jpg`;
   }
 
   ngOnDestroy(): void {

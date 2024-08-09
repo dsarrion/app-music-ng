@@ -83,9 +83,9 @@ export class ContentComponent implements OnInit, OnChanges, OnDestroy {
     video = (results === null) ? url : results[1];
 
     if (size != null || size) {
-      thumburl = 'http://img.youtube.com/vi/' + video + '/' + size + '.jpg';
+      thumburl = 'https://img.youtube.com/vi/' + video + '/' + size + '.jpg';
     } else {
-      thumburl = 'http://img.youtube.com/vi/' + video + '/mqdefault.jpg';
+      thumburl = 'https://img.youtube.com/vi/' + video + '/mqdefault.jpg';
     }
 
     return thumburl;

@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrlBase: `https://talentodjs.com/api`  
+    apiUrlBase: `https://api.talentodjs.com/api`  
 };
